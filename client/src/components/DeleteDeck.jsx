@@ -11,7 +11,7 @@ export default function DeleteDeck({ deckId, onClose, loadAllDeck }) {
             if (success) {
                 loadAllDeck();
                 onClose();
-                return toast.success(message)
+                return toast.success(message);
 
             };
             return toast.error(message);

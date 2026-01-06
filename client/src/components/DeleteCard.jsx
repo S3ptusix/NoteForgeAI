@@ -11,8 +11,7 @@ export default function DeleteCard({ cardId, onClose, runFunction = () => { } })
             if (success) {
                 runFunction();
                 onClose();
-                return toast.success(message)
-
+                return toast.success(message);
             };
             return toast.error(message);
         } catch (error) {

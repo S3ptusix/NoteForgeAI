@@ -11,7 +11,7 @@ export const addCard = async (formData) => {
         console.error('Error on addCard:', error);
         return {
             success: false,
-            message: error.response?.data?.message || 'Failed to adding card'
+            message: error.response?.data?.message || 'Failed to add card'
         };
     }
 };

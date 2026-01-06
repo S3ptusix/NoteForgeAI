@@ -17,7 +17,7 @@ export default function AddCard({ deckId, onClose, runFunction = () => { } }) {
             if (success) {
                 runFunction();
                 onClose();
-                return toast.success(message)
+                return toast.success(message);
 
             };
             return toast.error(message, { toastId: "error-addCard" });
@@ -39,14 +39,14 @@ export default function AddCard({ deckId, onClose, runFunction = () => { } }) {
                     </button>
                 </div>
 
-                <p className="font-semibold mb-1 text-gray-700">Question</p>
+                <p className="font-semibold mb-1 text-gray-700 text-sm">Question</p>
                 <textarea
                     placeholder="Enter the question..."
                     className="border border-gray-300 w-full p-4 rounded-md h-25 mb-4 resize-none focus:outline-blue-700"
                     onChange={(e) => setQuestion(e.target.value)}
                 />
 
-                <p className="font-semibold mb-1 text-gray-700">Answer</p>
+                <p className="font-semibold mb-1 text-gray-700 text-sm">Answer</p>
                 <textarea
                     placeholder="Enter the answer..."
                     className="border border-gray-300 w-full p-4 rounded-md h-25 mb-4 resize-none focus:outline-blue-700"

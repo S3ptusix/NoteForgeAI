@@ -3,6 +3,7 @@ import { useState } from "react";
 import AddCard from "./AddCard";
 import DeleteDeck from "./DeleteDeck";
 import { useNavigate } from "react-router-dom";
+import EditDeck from "./EditDeck";
 
 export default function Decks({ decks, loadAllDeck }) {
 
@@ -10,7 +11,9 @@ export default function Decks({ decks, loadAllDeck }) {
 
     const [openAddDeck, setOpenAddDeck] = useState(false);
     const [openDeleteDeck, setOpenDeleteDeck] = useState(false);
+    const [openEditDeck, setOpenEditDeck] = useState(false);
     const [deckId, setDeckId] = useState(null);
+
 
     const handleAdd = (deckId) => {
         setDeckId(deckId);
@@ -20,6 +23,11 @@ export default function Decks({ decks, loadAllDeck }) {
     const handleDelete = (deckId) => {
         setDeckId(deckId);
         setOpenDeleteDeck(true);
+    }
+
+    const handleEdit = (deckId) => {
+        setDeckId(deckId);
+        setOpenEditDeck(true);
     }
 
     if (!decks.length) {
@@ -40,6 +48,7 @@ export default function Decks({ decks, loadAllDeck }) {
                         <div className="flex gap-4">
                             <button
                                 className="cursor-pointer text-blue-600"
+                                onClick={() => handleEdit(deck.id)}
                             >
                                 <SquarePen size={16} />
                             </button>
@@ -87,6 +96,14 @@ export default function Decks({ decks, loadAllDeck }) {
                     deckId={deckId}
                     onClose={() => setOpenDeleteDeck(false)}
                     loadAllDeck={loadAllDeck}
+                />
+            }
+
+            {openEditDeck &&
+                <EditDeck
+                    deckId={deckId}
+                    onClose={() => setOpenEditDeck(false)}
+                    runFunction={loadAllDeck}
                 />
             }
         </div>

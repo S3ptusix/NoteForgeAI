@@ -1,9 +1,9 @@
-import { addDeckService, deleteDeckService, fetchAllDeckService } from "../services/deckServices.js";
+import { addDeckService, deleteDeckService, editDeckService, fetchAllDeckService, fetchOneDeckService } from "../services/deckServices.js";
 
 // ADD DECK
 export const addDeckController = async (req, res) => {
-    const { deckName } = req.body;
     try {
+        const { deckName } = req.body;
         const result = await addDeckService(deckName);
         return res.json(result);
     } catch (error) {
@@ -23,14 +23,38 @@ export const fetchAllDeckController = async (req, res) => {
     }
 };
 
+// FETCH ONE DECK
+export const fetchOneDeckController = async (req, res) => {
+    try {
+        const { deckId } = req.params;
+        const result = await fetchOneDeckService(deckId);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on fetchOneDeckController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
 // DELETE DECK
 export const deleteDeckController = async (req, res) => {
-    const { deckId } = req.params;
     try {
+        const { deckId } = req.params;
         const result = await deleteDeckService(deckId);
         return res.json(result);
     } catch (error) {
         console.error("Error on deleteDeckController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// EDIT DECK
+export const editDeckController = async (req, res) => {
+    try {
+        const { deckId, deckName } = req.body;
+        const result = await editDeckService(deckId, deckName);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on editDeckController:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

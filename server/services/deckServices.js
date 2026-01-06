@@ -3,9 +3,8 @@ import { Decks, Cards } from "../models/fk.js";
 // ADD DECK
 export const addDeckService = async (deckName) => {
     try {
-        if (!deckName) {
-            return { success: false, message: "Please enter a deck name." };
-        }
+        if (!deckName) return { success: false, message: "Please enter a deck name." };
+
 
         const deck = await Decks.create({ deckName });
 
@@ -41,6 +40,34 @@ export const fetchAllDeckService = async () => {
     }
 }
 
+// FETCH ONE DECK
+export const fetchOneDeckService = async (deckId) => {
+    try {
+
+        if (!deckId) return { success: false, message: "Deck ID is required" };
+
+        const deck = await Decks.findOne({
+            attributes: ["deckName"],
+            where: { id: deckId }
+        });
+
+        if (!deck) return { success: false, message: "Deck not found." };
+
+        return {
+            success: true,
+            deck
+        };
+
+    } catch (error) {
+        console.log("Error on fetchOneDeckService:", error);
+
+        return {
+            success: false,
+            message: "Error on fetchOneDeckService"
+        };
+    }
+};
+
 // DELETE DECK
 export const deleteDeckService = async (deckId) => {
     try {
@@ -68,5 +95,31 @@ export const deleteDeckService = async (deckId) => {
             success: false,
             message: "Error on deleteDeckService"
         };
+    }
+};
+
+// EDIT DECK
+export const editDeckService = async (deckId, deckName) => {
+    try {
+
+        if (!deckId) return { success: false, message: "Deck ID is required" };
+
+        if (!deckName) return { success: false, message: "Please enter a deck name." };
+
+        const [updated] = await Decks.update(
+            { deckName },
+            { where: { id: deckId } }
+        );
+
+        if (!updated) return { success: false, message: "Deck not found or unchanged." };
+
+        return {
+            success: true,
+            message: "Deck edited successfully"
+        };
+
+    } catch (error) {
+        console.log("Error on editDeckService:", error);
+        return { success: false, message: "Error on editDeckService" };
     }
 };

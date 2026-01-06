@@ -2,8 +2,8 @@ import { addCardService, deleteCardService, fetchAllCardService } from "../servi
 
 // ADD CARD
 export const addCardController = async (req, res) => {
-    const { deckId, question, answer } = req.body;
     try {
+        const { deckId, question, answer } = req.body;
         const result = await addCardService(deckId, question, answer);
         return res.json(result);
     } catch (error) {
@@ -14,8 +14,8 @@ export const addCardController = async (req, res) => {
 
 // FETCH ALL CARD
 export const fetchAllCardController = async (req, res) => {
-    const { deckId } = req.params;
     try {
+        const { deckId } = req.params;
         const result = await fetchAllCardService(deckId);
         return res.json(result);
     } catch (error) {
@@ -26,8 +26,8 @@ export const fetchAllCardController = async (req, res) => {
 
 // DELETE CARD
 export const deleteCardController = async (req, res) => {
-    const { cardId } = req.params;
     try {
+        const { cardId } = req.params;
         const result = await deleteCardService(cardId);
         return res.json(result);
     } catch (error) {

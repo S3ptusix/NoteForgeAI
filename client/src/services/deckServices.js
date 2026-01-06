@@ -11,7 +11,7 @@ export const addDeck = async (formData) => {
         console.error('Error on addDeck:', error);
         return {
             success: false,
-            message: error.response?.data?.message || 'Failed to adding deck'
+            message: error.response?.data?.message || 'Failed to add deck'
         };
     }
 };
@@ -25,7 +25,21 @@ export const fetchAllDeck = async (formData) => {
         console.error('Error on fetchAllDeck:', error);
         return {
             success: false,
-            message: error.response?.data?.message || 'Failed to fetching decks'
+            message: error.response?.data?.message || 'Failed to fetch decks'
+        };
+    }
+};
+
+// FETCH ONE DECK
+export const fetchOneDeck = async (deckId) => {
+    try {
+        const response = await axios.get(`${API_URL}/api/deck/fetch/${deckId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on fetchOneDeck:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to fetching deck'
         };
     }
 };
@@ -43,3 +57,18 @@ export const deleteDeck = async (deckId) => {
         };
     }
 };
+
+// EDIT DECK
+export const editDeck = async (formData) => {
+    try {
+        const response = await axios.put(`${API_URL}/api/deck/edit`, formData);
+        return response.data;
+    } catch (error) {
+        console.error('Error on editDeck:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to edit deck'
+        };
+    }
+};
+
