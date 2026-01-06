@@ -1,12 +1,35 @@
-import { Plus, Trash2 } from "lucide-react";
+/* eslint-disable no-unused-vars */
+import { Plus } from "lucide-react";
 import Topbar from "../components/Topbar";
 import GenerateFlashcards from "../components/GenerateFlashcards";
 import AddDeck from "../components/addDeck";
 import { useState } from "react";
+import Decks from "../components/Decks";
+import { useEffect } from "react";
+import { fetchAllDeck } from "../services/deckServices";
+import { toast } from "react-toastify";
 
 export default function Home() {
 
     const [openAddDeck, setOpenAddDeck] = useState(false);
+    const [data, setData] = useState([]);
+
+
+    const loadAllDeck = async () => {
+        try {
+            const { success, message, decks } = await fetchAllDeck();
+            if (success) return setData(decks);
+            toast.error(message);
+        } catch (error) {
+            console.log('')
+        }
+    }
+
+    useEffect(() => {
+        queueMicrotask(() => {
+            loadAllDeck();
+        });
+    }, []);
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -27,36 +50,19 @@ export default function Home() {
                             New Deck
                         </button>
                     </div>
-                    <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
-                        <div className="border border-gray-300 p-4 rounded-lg">
-                            <div className="flex items-center justify-between mb-4">
-                                <p className="font-semibold">
-                                    Title
-                                </p>
-                                <button
-                                    className="btn btn-square btn-ghost text-red-500"
-                                >
-                                    <Trash2 size={16} />
-                                </button>
-                            </div>
-                            <p className="mb-4 text-gray-400">2 cards</p>
-                            <div className="flex gap-4">
-                                <button
-                                    className="btn grow bg-blue-600 text-white"
-                                >
-                                    View Cards
-                                </button>
-                                <button
-                                    className="btn btn-square border-gray-300"
-                                >
-                                    <Plus size={16} />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+
+                    <Decks
+                        decks={data}
+                        loadAllDeck={loadAllDeck}
+                    />
                 </div>
             </div>
-            {openAddDeck && <AddDeck onClose={() => setOpenAddDeck(false)} />
+
+            {openAddDeck &&
+                <AddDeck
+                    onClose={() => setOpenAddDeck(false)}
+                    loadAllDeck={loadAllDeck}
+                />
             }
         </div>
     )

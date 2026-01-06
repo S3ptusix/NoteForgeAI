@@ -1,6 +1,6 @@
-import Cards from "../models/Card.js";
-import Decks from "../models/Deck.js";
+import { Decks, Cards } from "../models/fk.js";
 
+// ADD DECK
 export const addDeckService = async (deckName) => {
     try {
         if (!deckName) {
@@ -16,3 +16,27 @@ export const addDeckService = async (deckName) => {
         return { success: false, message: 'Error on addDeckService' };
     }
 };
+
+// FETCH ALL DECK
+export const fetchAllDeckService = async () => {
+    try {
+        const decks = await Decks.findAll({
+            attributes: ["id", "deckName"],
+            include: [
+                {
+                    model: Cards,
+                    attributes: ["id", "question", "answer"]
+                },
+            ],
+        });
+        
+        return {
+            success: true,
+            decks
+        }
+
+    } catch (error) {
+        console.log('Error on fetchAllDeckService:', error);
+        return { success: false, message: 'Error on fetchAllDeckService' };
+    }
+}

@@ -8,13 +8,20 @@
     .flex-center {
         @apply flex justify-center items-center;
     }
-    .modal-style{
+
+    .modal-style {
         @apply fixed top-0 bottom-0 left-0 right-0 bg-black/25 flex items-center justify-center z-999;
     }
-    .modal-style > div{
+
+    .modal-style>div {
         @apply p-4 rounded-lg bg-white w-[calc(min(500px,100%))];
     }
-    .modal-title{
+
+    .modal-title {
         @apply flex items-center justify-between mb-4;
+    }
+
+    .input {
+        @apply -outline-offset-1 focus:outline-blue-600;
     }
 }

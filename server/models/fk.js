@@ -1,5 +1,5 @@
-import Cards from "./Card";
-import Decks from "./Deck";
+import Cards from "./Card.js";
+import Decks from "./Deck.js";
 
 Cards.belongsTo(Decks, { foreignKey: 'deckId' });
 Decks.hasMany(Cards, { foreignKey: 'deckId' });

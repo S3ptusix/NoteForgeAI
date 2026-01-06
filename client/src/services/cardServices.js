@@ -1,0 +1,17 @@
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+// ADD CARD
+export const addCard = async (formData) => {
+    try {
+        const response = await axios.post(`${API_URL}/api/card/add`, formData);
+        return response.data;
+    } catch (error) {
+        console.error('Error on addCard:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to adding card'
+        };
+    }
+};
