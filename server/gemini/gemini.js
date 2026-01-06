@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { extractJSON } from './utils/extractJSON.js';
+import { extractJSON } from '../utils/extractJSON.js';
 
 dotenv.config();
 

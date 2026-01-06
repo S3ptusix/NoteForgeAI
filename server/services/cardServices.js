@@ -38,3 +38,41 @@ export const addCardService = async (deckId, question, answer) => {
         return { success: false, message: "Error on addCardService." };
     }
 };
+
+// FETCH ALL CARD
+export const fetchAllCardService = async (deckId) => {
+    try {
+
+        if (!deckId) {
+            return { success: false, message: "Deck ID is required" };
+        }
+
+        const deck = await Decks.findOne({
+            attributes: ["deckName"],
+            where: { id: deckId }
+        });
+
+        if (!deck) {
+            return { success: false, message: "Deck not found" };
+        }
+
+        const cards = await Cards.findAll({
+            where: { deckId },
+            attributes: ["id", "question", "answer"],
+            order: [["createdAt", "ASC"]]
+        });
+
+        return {
+            success: true,
+            deckName: deck.deckName,
+            cards
+        };
+
+    } catch (error) {
+        console.log("Error on fetchAllCardService:", error);
+        return {
+            success: false,
+            message: "Error on fetchAllCardService"
+        };
+    }
+};

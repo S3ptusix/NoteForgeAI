@@ -15,3 +15,17 @@ export const addCard = async (formData) => {
         };
     }
 };
+
+// FETCH ALL CARD
+export const fetchAllCard = async (deckId) => {
+    try {
+        const response = await axios.get(`${API_URL}/api/card/fetchAll/${deckId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on addCard:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to fetch cards'
+        };
+    }
+};

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { addCard } from "../services/cardServices";
 import { fixSpaces } from "../utils/format";
 
-export default function AddCard({ deckId, onClose, loadAllDeck }) {
+export default function AddCard({ deckId, onClose, runFunction = () => { } }) {
 
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
@@ -15,7 +15,7 @@ export default function AddCard({ deckId, onClose, loadAllDeck }) {
             const formatedAnswer = fixSpaces(answer);
             const { success, message } = await addCard({ deckId, question: formatedName, answer: formatedAnswer });
             if (success) {
-                loadAllDeck();
+                runFunction();
                 onClose();
                 return toast.success(message)
 

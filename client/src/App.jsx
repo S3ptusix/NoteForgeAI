@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import Home from "./pages/home"
+import ViewCards from "./pages/ViewCards"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/viewCards/:deckId" element={<ViewCards />} />
       </Routes>
     </BrowserRouter>
   )

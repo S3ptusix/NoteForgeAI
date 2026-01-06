@@ -2,8 +2,11 @@ import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import AddCard from "./AddCard";
 import DeleteDeck from "./DeleteDeck";
+import { useNavigate } from "react-router-dom";
 
 export default function Decks({ decks, loadAllDeck }) {
+
+    const navigate = useNavigate();
 
     const [openAddCard, setOpenAddCard] = useState(false);
     const [openDeleteCard, setOpenDeleteCard] = useState(false);
@@ -20,7 +23,7 @@ export default function Decks({ decks, loadAllDeck }) {
     }
 
     return (
-        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
+        <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
             {decks.map((deck) => (
                 <div key={deck.id} className="border border-gray-300 p-4 rounded-lg">
 
@@ -41,7 +44,10 @@ export default function Decks({ decks, loadAllDeck }) {
 
 
                     <div className="flex gap-4">
-                        <button className="btn grow bg-blue-600 text-white">
+                        <button
+                            className="btn grow bg-blue-600 text-white"
+                            onClick={() => navigate(`/viewCards/${deck.id}`)}
+                        >
                             View Cards
                         </button>
                         <button
@@ -58,7 +64,7 @@ export default function Decks({ decks, loadAllDeck }) {
                 <AddCard
                     deckId={deckId}
                     onClose={() => setOpenAddCard(false)}
-                    loadAllDeck={loadAllDeck}
+                    runFunction={loadAllDeck}
                 />
             }
             {openDeleteCard &&

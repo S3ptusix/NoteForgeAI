@@ -1,9 +1,12 @@
 import express from 'express';
-import { addCardController } from '../controllers/cardControllers.js';
+import { addCardController, fetchAllCardController } from '../controllers/cardControllers.js';
 
 const cardRouter = express.Router();
 
-// ADD DECK
+// ADD CARD
 cardRouter.post('/add', addCardController);
+
+// FETCH ALL CARD
+cardRouter.get('/fetchAll/:deckId', fetchAllCardController);
 
 export default cardRouter;
