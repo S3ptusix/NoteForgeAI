@@ -26,7 +26,7 @@ export default function AddDeck({ onClose, loadAllDeck }) {
 
     return (
         <div className="modal-style">
-            <div className="">
+            <div>
                 <div className="modal-title">
                     <p className="font-semibold">Create New Deck</p>
                     <button

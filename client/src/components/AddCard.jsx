@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -29,7 +28,7 @@ export default function AddCard({ deckId, onClose, loadAllDeck }) {
 
     return (
         <div className="modal-style">
-            <div className="">
+            <div>
                 <div className="modal-title">
                     <p className="font-semibold">Edit Card</p>
                     <button

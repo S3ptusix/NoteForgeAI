@@ -29,7 +29,7 @@ export const fetchAllDeckService = async () => {
                 },
             ],
         });
-        
+
         return {
             success: true,
             decks
@@ -40,3 +40,33 @@ export const fetchAllDeckService = async () => {
         return { success: false, message: 'Error on fetchAllDeckService' };
     }
 }
+
+// DELETE DECK
+export const deleteDeckService = async (deckId) => {
+    try {
+
+        if (!deckId) {
+            return { success: false, message: "Deck ID is required" };
+        }
+
+        const rowsAffected = await Decks.destroy({
+            where: { id: deckId }
+        });
+
+        if (!rowsAffected) {
+            return { success: false, message: "Deck not found." };
+        }
+
+        return {
+            success: true,
+            message: "Deck deleted successfully"
+        };
+
+    } catch (error) {
+        console.log("Error on deleteDeckService:", error);
+        return {
+            success: false,
+            message: "Error on deleteDeckService"
+        };
+    }
+};

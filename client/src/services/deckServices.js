@@ -29,3 +29,17 @@ export const fetchAllDeck = async (formData) => {
         };
     }
 };
+
+// DELETE DECK
+export const deleteDeck = async (deckId) => {
+    try {
+        const response = await axios.delete(`${API_URL}/api/deck/delete/${deckId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on deleteDeck:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to delete deck'
+        };
+    }
+};

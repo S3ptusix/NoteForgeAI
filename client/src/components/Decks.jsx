@@ -1,15 +1,22 @@
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import AddCard from "./AddCard";
+import DeleteDeck from "./DeleteDeck";
 
 export default function Decks({ decks, loadAllDeck }) {
 
     const [openAddCard, setOpenAddCard] = useState(false);
+    const [openDeleteCard, setOpenDeleteCard] = useState(false);
     const [deckId, setDeckId] = useState(null);
 
     const handleAdd = (deckId) => {
-        setOpenAddCard(true);
         setDeckId(deckId);
+        setOpenAddCard(true);
+    }
+
+    const handleDelete = (deckId) => {
+        setDeckId(deckId);
+        setOpenDeleteCard(true);
     }
 
     return (
@@ -19,7 +26,10 @@ export default function Decks({ decks, loadAllDeck }) {
 
                     <div className="flex items-center justify-between mb-4">
                         <p className="font-semibold">{deck.deckName}</p>
-                        <button className="btn btn-square btn-ghost text-red-500">
+                        <button
+                            className="btn btn-square btn-ghost text-red-500"
+                            onClick={() => handleDelete(deck.id)}
+                        >
                             <Trash2 size={16} />
                         </button>
                     </div>
@@ -48,6 +58,13 @@ export default function Decks({ decks, loadAllDeck }) {
                 <AddCard
                     deckId={deckId}
                     onClose={() => setOpenAddCard(false)}
+                    loadAllDeck={loadAllDeck}
+                />
+            }
+            {openDeleteCard &&
+                <DeleteDeck
+                    deckId={deckId}
+                    onClose={() => setOpenDeleteCard(false)}
                     loadAllDeck={loadAllDeck}
                 />
             }
