@@ -1,17 +1,19 @@
 import { X } from "lucide-react";
 import { useState } from "react";
-import { addDeck } from "../services/deckService";
+import { addDeck } from "../services/deckServices";
 import { toast } from "react-toastify";
+import { fixSpaces } from "../utils/format";
 
-export default function AddDeck({ onClose }) {
+export default function AddDeck({ onClose, loadAllDeck }) {
 
     const [deckName, setDeckName] = useState('');
 
     const handleSubmit = async () => {
         try {
-            const formatedName = deckName.trim().replace(/\s+/g, " ");
+            const formatedName = fixSpaces(deckName);
             const { success, message } = await addDeck({ deckName: formatedName });
             if (success) {
+                loadAllDeck();
                 onClose();
                 return toast.success(message)
 
@@ -37,7 +39,7 @@ export default function AddDeck({ onClose }) {
                 <input
                     type="text"
                     placeholder="e.g., Biology, Spanish, Vocabulary..."
-                    className="input w-full focus:outline-blue-600 mb-4"
+                    className="input w-full mb-4"
                     onChange={(e) => setDeckName(e.target.value)}
                 />
                 <div className="flex gap-4">

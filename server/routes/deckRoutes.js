@@ -1,9 +1,12 @@
 import express from 'express';
-import { addCompanyController } from '../controllers/deckControllers.js';
+import { addDeckController, fetchAllDeckController } from '../controllers/deckControllers.js';
 
 const deckRouter = express.Router();
 
 // ADD DECK
-deckRouter.post('/add', addCompanyController);
+deckRouter.post('/add', addDeckController);
+
+// FETCH ALL DECK
+deckRouter.get('/fetchAll', fetchAllDeckController);
 
 export default deckRouter;
