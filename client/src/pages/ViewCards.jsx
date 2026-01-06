@@ -23,7 +23,7 @@ export default function ViewCards() {
             const { success, message, deckName, cards } = await fetchAllCard(deckId);
             if (success) {
                 setName(deckName);
-                setData(cards)
+                setData(cards);
                 return
             };
             toast.error(message);
@@ -52,7 +52,10 @@ export default function ViewCards() {
                 <div className="flex flex-wrap gap-x-20 gap-y-4 items-center justify-between my-4">
                     <p className="font-semibold text-lg">{name}</p>
                     <div className="flex flex-wrap gap-4">
-                        <button className="btn bg-green-600 text-white">
+                        <button
+                            className="btn bg-green-600 text-white"
+                            onClick={() => navigate(`/studyMode/${deckId}`)}
+                        >
                             <GraduationCap size={16} />
                             Study Mode
                         </button>

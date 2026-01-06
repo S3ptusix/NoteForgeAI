@@ -1,7 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import Home from "./pages/home"
 import ViewCards from "./pages/ViewCards"
+import StudyMode from "./pages/StudyMode"
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/viewCards/:deckId" element={<ViewCards />} />
+        <Route path="/studyMode/:deckId" element={<StudyMode />} />
+        <Route path="*" element={<Navigate to="/" replace/>} />
       </Routes>
     </BrowserRouter>
   )
