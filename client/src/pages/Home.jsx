@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Plus } from "lucide-react";
 import Topbar from "../components/Topbar";
 import GenerateFlashcards from "../components/GenerateFlashcards";
@@ -21,7 +20,7 @@ export default function Home() {
             if (success) return setData(decks);
             toast.error(message);
         } catch (error) {
-            console.log('')
+            console.error('Error on loadAllDeck:', error)
         }
     }
 

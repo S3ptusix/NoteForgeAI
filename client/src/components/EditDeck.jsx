@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -7,11 +6,11 @@ import { editDeck, fetchOneDeck } from "../services/deckServices";
 
 export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
 
-    const [deckValues, setDeckValues] = useState('');
+    const [deckName, setDeckName] = useState('');
 
     const handleSubmit = async () => {
         try {
-            const formatedName = fixSpaces(deckValues);
+            const formatedName = fixSpaces(deckName);
             const { success, message } = await editDeck({ deckId, deckName: formatedName });
             if (success) {
                 runFunction();
@@ -20,7 +19,7 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
             };
             return toast.error(message);
         } catch (error) {
-            console.log('Error on handSubmit:', error);
+            console.error('Error on handSubmit:', error);
         }
     }
 
@@ -28,10 +27,10 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
         const loadValues = async () => {
             try {
                 const { success, message, deck } = await fetchOneDeck(deckId);
-                if (success) return setDeckValues(deck.deckName);
-                return toast.error(message, { toastId: "error-editDeck" });
+                if (success) return setDeckName(deck.deckName);
+                return toast.error(message, { toastId: "error-loadDeck" });
             } catch (error) {
-                console.log('Error on loadValues:', error);
+                console.error('Error on loadValues:', error);
             }
         }
         loadValues();
@@ -54,8 +53,8 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
                     type="text"
                     placeholder="e.g., Biology, Spanish, Vocabulary..."
                     className="input w-full mb-4"
-                    value={deckValues}
-                    onChange={(e) => setDeckValues(e.target.value)}
+                    value={deckName}
+                    onChange={(e) => setDeckName(e.target.value)}
                 />
                 <div className="flex gap-4">
                     <button

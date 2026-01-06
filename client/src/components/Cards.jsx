@@ -1,6 +1,7 @@
 import { SquarePen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import DeleteCard from "./DeleteCard";
+import EditCard from "./EditCard";
 
 export default function Cards({ cards = [], loadAllCard = () => { } }) {
 
@@ -8,6 +9,7 @@ export default function Cards({ cards = [], loadAllCard = () => { } }) {
 
     const [cardId, setCardId] = useState(null);
     const [openDeleteCard, setOpenDeleteCard] = useState(false);
+    const [openEditCard, setOpenEditCard] = useState(false);
 
     const toggleFlip = (id) => {
         setFlipped(prev => ({
@@ -19,6 +21,11 @@ export default function Cards({ cards = [], loadAllCard = () => { } }) {
     const handleDelete = (cardId) => {
         setCardId(cardId);
         setOpenDeleteCard(true);
+    }
+
+    const handleEdit = (cardId) => {
+        setCardId(cardId);
+        setOpenEditCard(true);
     }
 
     if (!cards.length) {
@@ -43,7 +50,10 @@ export default function Cards({ cards = [], loadAllCard = () => { } }) {
                         className="border border-gray-300 rounded-lg p-8 text-sm"
                     >
                         <div className="flex justify-end gap-4">
-                            <button className="text-blue-600 cursor-pointer">
+                            <button
+                                className="text-blue-600 cursor-pointer"
+                                onClick={() => handleEdit(card.id)}
+                            >
                                 <SquarePen size={16} />
                             </button>
 
@@ -83,6 +93,14 @@ export default function Cards({ cards = [], loadAllCard = () => { } }) {
                 <DeleteCard
                     cardId={cardId}
                     onClose={() => setOpenDeleteCard(false)}
+                    runFunction={loadAllCard}
+                />
+            }
+
+            {openEditCard &&
+                <EditCard
+                    cardId={cardId}
+                    onClose={() => setOpenEditCard(false)}
                     runFunction={loadAllCard}
                 />
             }

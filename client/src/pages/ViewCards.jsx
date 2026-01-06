@@ -28,7 +28,7 @@ export default function ViewCards() {
             };
             toast.error(message);
         } catch (error) {
-            console.log('Error on loadAllCard:', error)
+            console.error('Error on loadAllCard:', error)
         }
     }
 

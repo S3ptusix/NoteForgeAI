@@ -77,6 +77,37 @@ export const fetchAllCardService = async (deckId) => {
     }
 };
 
+// FETCH ONE CARD
+export const fetchOneCardService = async (cardId) => {
+    try {
+
+        if (!cardId) {
+            return { success: false, message: "Card ID is required" };
+        }
+
+        const card = await Cards.findOne({
+            attributes: ["question", "answer"],
+            where: { id: cardId }
+        });
+
+        if (!card) {
+            return { success: false, message: "Card not found" };
+        }
+
+        return {
+            success: true,
+            card
+        };
+
+    } catch (error) {
+        console.log("Error on fetchOneCardService:", error);
+        return {
+            success: false,
+            message: "Error on fetchOneCardService"
+        };
+    }
+};
+
 // DELETE CARD
 export const deleteCardService = async (cardId) => {
     try {
@@ -104,5 +135,34 @@ export const deleteCardService = async (cardId) => {
             success: false,
             message: "Error on deleteCardService"
         };
+    }
+};
+
+// EDIT CARD
+export const editCardService = async (cardId, question, answer) => {
+    try {
+
+        if (!cardId) return { success: false, message: "Card ID is required" };
+
+        if (!question?.trim() || !answer?.trim()) return { success: false, message: "Please enter all fields" };
+
+        const [updated] = await Cards.update(
+            {
+                question: fixSpaces(question),
+                answer: fixSpaces(answer)
+            },
+            { where: { id: cardId } }
+        );
+
+        if (!updated) return { success: false, message: "Card not found or unchanged." };
+
+        return {
+            success: true,
+            message: "Card edited successfully"
+        };
+
+    } catch (error) {
+        console.log("Error on editCardService:", error);
+        return { success: false, message: "Error on editCardService" };
     }
 };

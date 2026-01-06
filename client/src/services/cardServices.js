@@ -22,10 +22,24 @@ export const fetchAllCard = async (deckId) => {
         const response = await axios.get(`${API_URL}/api/card/fetchAll/${deckId}`);
         return response.data;
     } catch (error) {
-        console.error('Error on addCard:', error);
+        console.error('Error on fetchAllCard:', error);
         return {
             success: false,
             message: error.response?.data?.message || 'Failed to fetch cards'
+        };
+    }
+};
+
+// FETCH ONE CARD
+export const fetchOneCard = async (cardId) => {
+    try {
+        const response = await axios.get(`${API_URL}/api/card/fetch/${cardId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on fetchOneCard:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to fetch card'
         };
     }
 };
@@ -40,6 +54,20 @@ export const deleteCard = async (cardId) => {
         return {
             success: false,
             message: error.response?.data?.message || 'Failed to delete cards'
+        };
+    }
+};
+
+// EDIT CARD
+export const editCard = async (formData) => {
+    try {
+        const response = await axios.put(`${API_URL}/api/card/edit`, formData);
+        return response.data;
+    } catch (error) {
+        console.error('Error on editCard:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to edit card'
         };
     }
 };
