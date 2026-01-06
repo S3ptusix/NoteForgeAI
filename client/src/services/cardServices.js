@@ -29,3 +29,17 @@ export const fetchAllCard = async (deckId) => {
         };
     }
 };
+
+// DELETE CARD
+export const deleteCard = async (cardId) => {
+    try {
+        const response = await axios.delete(`${API_URL}/api/card/delete/${cardId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on deleteCard:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to delete cards'
+        };
+    }
+};

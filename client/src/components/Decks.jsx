@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, SquarePen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import AddCard from "./AddCard";
 import DeleteDeck from "./DeleteDeck";
@@ -8,18 +8,26 @@ export default function Decks({ decks, loadAllDeck }) {
 
     const navigate = useNavigate();
 
-    const [openAddCard, setOpenAddCard] = useState(false);
-    const [openDeleteCard, setOpenDeleteCard] = useState(false);
+    const [openAddDeck, setOpenAddDeck] = useState(false);
+    const [openDeleteDeck, setOpenDeleteDeck] = useState(false);
     const [deckId, setDeckId] = useState(null);
 
     const handleAdd = (deckId) => {
         setDeckId(deckId);
-        setOpenAddCard(true);
+        setOpenAddDeck(true);
     }
 
     const handleDelete = (deckId) => {
         setDeckId(deckId);
-        setOpenDeleteCard(true);
+        setOpenDeleteDeck(true);
+    }
+
+    if (!decks.length) {
+        return (
+            <p className="text-gray-400 text-center my-16">
+                No decks yet. Create your first deck to get started!
+            </p>
+        );
     }
 
     return (
@@ -29,12 +37,19 @@ export default function Decks({ decks, loadAllDeck }) {
 
                     <div className="flex items-center justify-between mb-4">
                         <p className="font-semibold">{deck.deckName}</p>
-                        <button
-                            className="btn btn-square btn-ghost text-red-500"
-                            onClick={() => handleDelete(deck.id)}
-                        >
-                            <Trash2 size={16} />
-                        </button>
+                        <div className="flex gap-4">
+                            <button
+                                className="cursor-pointer text-blue-600"
+                            >
+                                <SquarePen size={16} />
+                            </button>
+                            <button
+                                className="cursor-pointer text-red-500"
+                                onClick={() => handleDelete(deck.id)}
+                            >
+                                <Trash2 size={16} />
+                            </button>
+                        </div>
                     </div>
 
 
@@ -60,17 +75,17 @@ export default function Decks({ decks, loadAllDeck }) {
                 </div>
             ))}
 
-            {openAddCard &&
+            {openAddDeck &&
                 <AddCard
                     deckId={deckId}
-                    onClose={() => setOpenAddCard(false)}
+                    onClose={() => setOpenAddDeck(false)}
                     runFunction={loadAllDeck}
                 />
             }
-            {openDeleteCard &&
+            {openDeleteDeck &&
                 <DeleteDeck
                     deckId={deckId}
-                    onClose={() => setOpenDeleteCard(false)}
+                    onClose={() => setOpenDeleteDeck(false)}
                     loadAllDeck={loadAllDeck}
                 />
             }

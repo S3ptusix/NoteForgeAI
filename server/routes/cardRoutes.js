@@ -1,5 +1,5 @@
 import express from 'express';
-import { addCardController, fetchAllCardController } from '../controllers/cardControllers.js';
+import { addCardController, deleteCardController, fetchAllCardController } from '../controllers/cardControllers.js';
 
 const cardRouter = express.Router();
 
@@ -8,5 +8,8 @@ cardRouter.post('/add', addCardController);
 
 // FETCH ALL CARD
 cardRouter.get('/fetchAll/:deckId', fetchAllCardController);
+
+// DELETE CARD
+cardRouter.delete('/delete/:cardId', deleteCardController);
 
 export default cardRouter;

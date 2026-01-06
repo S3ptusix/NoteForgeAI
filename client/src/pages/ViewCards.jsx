@@ -66,7 +66,10 @@ export default function ViewCards() {
                     </div>
                 </div>
 
-                <Cards data={data} />
+                <Cards
+                    cards={data}
+                    loadAllCard={loadAllCard}
+                />
 
             </div>
             {openAddCard &&

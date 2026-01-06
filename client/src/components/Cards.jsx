@@ -1,10 +1,13 @@
-/* eslint-disable no-unused-vars */
 import { SquarePen, Trash2 } from "lucide-react";
 import { useState } from "react";
+import DeleteCard from "./DeleteCard";
 
-export default function Cards({ data = [] }) {
+export default function Cards({ cards = [], loadAllCard = () => { } }) {
 
     const [flipped, setFlipped] = useState({});
+
+    const [cardId, setCardId] = useState(null);
+    const [openDeleteCard, setOpenDeleteCard] = useState(false);
 
     const toggleFlip = (id) => {
         setFlipped(prev => ({
@@ -13,7 +16,12 @@ export default function Cards({ data = [] }) {
         }));
     };
 
-    if (!data.length) {
+    const handleDelete = (cardId) => {
+        setCardId(cardId);
+        setOpenDeleteCard(true);
+    }
+
+    if (!cards.length) {
         return (
             <p className="text-gray-400 text-center my-16">
                 No cards in this deck yet. Add your first card!
@@ -24,7 +32,7 @@ export default function Cards({ data = [] }) {
     return (
         <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
 
-            {data.map(card => {
+            {cards.map(card => {
 
                 const isFlipped = flipped[card.id];
 
@@ -39,7 +47,10 @@ export default function Cards({ data = [] }) {
                                 <SquarePen size={16} />
                             </button>
 
-                            <button className="text-red-600 cursor-pointer">
+                            <button
+                                className="text-red-600 cursor-pointer"
+                                onClick={() => handleDelete(card.id)}
+                            >
                                 <Trash2 size={16} />
                             </button>
                         </div>
@@ -48,7 +59,7 @@ export default function Cards({ data = [] }) {
                             className="flex-center my-4 py-16 cursor-pointer"
                             onClick={() => toggleFlip(card.id)}
                         >
-                            {isFlipped ?
+                            {!isFlipped ?
                                 <div className="text-center">
                                     <p className="text-gray-400 mb-2">QUESTION</p>
                                     <p>{card.question}</p>
@@ -68,7 +79,13 @@ export default function Cards({ data = [] }) {
                     </div>
                 )
             })}
-
+            {openDeleteCard &&
+                <DeleteCard
+                    cardId={cardId}
+                    onClose={() => setOpenDeleteCard(false)}
+                    runFunction={loadAllCard}
+                />
+            }
         </div>
     );
 }

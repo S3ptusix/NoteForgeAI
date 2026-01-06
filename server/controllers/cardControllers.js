@@ -1,4 +1,4 @@
-import { addCardService, fetchAllCardService } from "../services/cardServices.js";
+import { addCardService, deleteCardService, fetchAllCardService } from "../services/cardServices.js";
 
 // ADD CARD
 export const addCardController = async (req, res) => {
@@ -20,6 +20,18 @@ export const fetchAllCardController = async (req, res) => {
         return res.json(result);
     } catch (error) {
         console.error("Error on fetchAllCardController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// DELETE CARD
+export const deleteCardController = async (req, res) => {
+    const { cardId } = req.params;
+    try {
+        const result = await deleteCardService(cardId);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on deleteCardController:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

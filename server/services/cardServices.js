@@ -76,3 +76,33 @@ export const fetchAllCardService = async (deckId) => {
         };
     }
 };
+
+// DELETE CARD
+export const deleteCardService = async (cardId) => {
+    try {
+
+        if (!cardId) {
+            return { success: false, message: "Card ID is required" };
+        }
+
+        const rowsAffected = await Cards.destroy({
+            where: { id: cardId }
+        });
+
+        if (!rowsAffected) {
+            return { success: false, message: "Card not found." };
+        }
+
+        return {
+            success: true,
+            message: "card deleted successfully"
+        };
+
+    } catch (error) {
+        console.log("Error on deleteCardService:", error);
+        return {
+            success: false,
+            message: "Error on deleteCardService"
+        };
+    }
+};
