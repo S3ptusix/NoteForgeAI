@@ -1,4 +1,4 @@
-import { addCardService, deleteCardService, fetchAllCardService } from "../services/cardServices.js";
+import { addCardService, deleteCardService, editCardService, fetchAllCardService, fetchOneCardService } from "../services/cardServices.js";
 
 // ADD CARD
 export const addCardController = async (req, res) => {
@@ -24,6 +24,18 @@ export const fetchAllCardController = async (req, res) => {
     }
 };
 
+// FETCH ONE CARD
+export const fetchOneCardController = async (req, res) => {
+    try {
+        const { cardId } = req.params;
+        const result = await fetchOneCardService(cardId);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on fetchOneCardController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
 // DELETE CARD
 export const deleteCardController = async (req, res) => {
     try {
@@ -32,6 +44,18 @@ export const deleteCardController = async (req, res) => {
         return res.json(result);
     } catch (error) {
         console.error("Error on deleteCardController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// EDIT CARD
+export const editCardController = async (req, res) => {
+    try {
+        const { cardId, question, answer } = req.body;
+        const result = await editCardService(cardId, question, answer);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on editCardController:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

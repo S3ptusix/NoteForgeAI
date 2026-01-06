@@ -20,7 +20,7 @@ export default function AddDeck({ onClose, loadAllDeck }) {
             };
             return toast.error(message, { toastId: "error-addDeck" });
         } catch (error) {
-            console.log('Error on handSubmit:', error);
+            console.error('Error on handSubmit:', error);
         }
     }
 

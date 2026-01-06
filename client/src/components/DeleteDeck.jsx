@@ -16,7 +16,7 @@ export default function DeleteDeck({ deckId, onClose, loadAllDeck }) {
             };
             return toast.error(message);
         } catch (error) {
-            console.log('Error on handSubmit:', error);
+            console.error('Error on handSubmit:', error);
         }
     }
 
