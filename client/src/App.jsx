@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify"
 import Home from "./pages/home"
 import ViewCards from "./pages/ViewCards"
 import StudyMode from "./pages/StudyMode"
+import LandingPage from "./pages/LandingPage"
 
 function App() {
 
@@ -17,9 +18,11 @@ function App() {
         theme="dark"
       />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/viewCards/:deckId" element={<ViewCards />} />
-        <Route path="/studyMode/:deckId" element={<StudyMode />} />
+        <Route path="/" element={<LandingPage />} />
+
+        <Route path="/app" element={<Home />} />
+        <Route path="/app/viewCards/:deckId" element={<ViewCards />} />
+        <Route path="/app/studyMode/:deckId" element={<StudyMode />} />
         <Route path="*" element={<Navigate to="/" replace/>} />
       </Routes>
     </BrowserRouter>

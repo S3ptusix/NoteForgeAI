@@ -79,7 +79,7 @@ export default function StudyMode() {
 
                 <button
                     className="flex gap-2 items-center text-gray-700 cursor-pointer"
-                    onClick={() => navigate(`/viewCards/${deckId}`)}
+                    onClick={() => navigate(`/app/viewCards/${deckId}`)}
                 >
                     <X />
                     Exit

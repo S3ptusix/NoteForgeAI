@@ -70,7 +70,7 @@ export default function Decks({ decks, loadAllDeck }) {
                     <div className="flex gap-4">
                         <button
                             className="btn grow bg-blue-600 text-white"
-                            onClick={() => navigate(`/viewCards/${deck.id}`)}
+                            onClick={() => navigate(`/app/viewCards/${deck.id}`)}
                         >
                             View Cards
                         </button>

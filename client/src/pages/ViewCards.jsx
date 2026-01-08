@@ -44,7 +44,7 @@ export default function ViewCards() {
             <div className="grow mx-[10vw] py-8">
                 <button
                     className="flex items-center cursor-pointer gap-2 text-gray-700"
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/app')}
                 >
                     <ArrowLeft size={16} />
                     Back to Decks
@@ -54,7 +54,7 @@ export default function ViewCards() {
                     <div className="flex flex-wrap gap-4">
                         <button
                             className="btn bg-green-600 text-white"
-                            onClick={() => navigate(`/studyMode/${deckId}`)}
+                            onClick={() => navigate(`/app/studyMode/${deckId}`)}
                         >
                             <GraduationCap size={16} />
                             Study Mode
