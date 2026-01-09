@@ -3,8 +3,9 @@ import { addDeckService, deleteDeckService, editDeckService, fetchAllDeckService
 // ADD DECK
 export const addDeckController = async (req, res) => {
     try {
+        const userId = req.user.id;
         const { deckName } = req.body;
-        const result = await addDeckService(deckName);
+        const result = await addDeckService(userId, deckName);
         return res.json(result);
     } catch (error) {
         console.error("Error on addDeckController:", error);

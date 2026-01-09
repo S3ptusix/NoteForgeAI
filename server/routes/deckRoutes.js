@@ -1,10 +1,11 @@
 import express from 'express';
 import { addDeckController, deleteDeckController, editDeckController, fetchAllDeckController, fetchOneDeckController } from '../controllers/deckControllers.js';
+import { authenticateUserJWT } from '../middleware/auth.js';
 
 const deckRouter = express.Router();
 
 // ADD DECK
-deckRouter.post('/add', addDeckController);
+deckRouter.post('/add', authenticateUserJWT, addDeckController);
 
 // FETCH ALL DECK
 deckRouter.get('/fetchAll', fetchAllDeckController);

@@ -1,9 +1,47 @@
 import { Eye, EyeOff, X } from "lucide-react";
 import { useState } from "react";
+import { handleRegister } from "../services/userServices";
+import { toast } from "react-toastify";
 
 export default function Register({ onClose, switchModal = () => { } }) {
 
     const [viewPassword, setViewPassword] = useState(false);
+
+    const [userInput, setUserInput] = useState({
+        fullname: "",
+        username: "",
+        password: ""
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+
+        if (name === "username") {
+            e.target.value = value.toLowerCase().replace(/\s+/g, '');
+        }
+
+        if (name === "password") {
+            e.target.value = value.replace(/\s+/g, '');
+        }
+
+        setUserInput(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const { success, message } = await handleRegister(userInput);
+            if (success) {
+                onClose();
+                return toast.success(message);
+            };
+            return toast.error(message);
+        } catch (error) {
+            console.error('Error on handleSubmit:', error);
+        }
+    }
 
     return (
         <div className="modal-style">
@@ -19,24 +57,29 @@ export default function Register({ onClose, switchModal = () => { } }) {
                 </div>
                 <p className="text-sm text-gray-700 mb-2 font-semibold">Full Name</p>
                 <input
+                    name="fullname"
                     type="text"
                     placeholder="Nick her"
                     className="input w-full mb-4"
+                    onChange={handleInputChange}
                 />
 
                 <p className="text-sm text-gray-700 mb-2 font-semibold">Username</p>
                 <input
+                    name="username"
                     type="text"
                     placeholder="Username123"
                     className="input w-full mb-4"
+                    onChange={handleInputChange}
                 />
 
                 <p className="text-sm text-gray-700 mb-2 font-semibold">Password</p>
                 <div className="input w-full mb-4 outline-blue-600">
                     <input
+                        name="password"
                         type={viewPassword ? "text" : "password"}
                         placeholder="••••••••"
-                        className=""
+                        onChange={handleInputChange}
                     />
                     <button
                         className="btn btn-square bg-transparent border-0 text-gray-400"
@@ -48,6 +91,7 @@ export default function Register({ onClose, switchModal = () => { } }) {
 
                 <button
                     className="btn bg-blue-600 text-white w-full"
+                    onClick={handleSubmit}
                 >
                     Sign Up
                 </button>

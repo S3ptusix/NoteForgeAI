@@ -13,7 +13,6 @@ export default function Home() {
     const [openAddDeck, setOpenAddDeck] = useState(false);
     const [data, setData] = useState([]);
 
-
     const loadAllDeck = async () => {
         try {
             const { success, message, decks } = await fetchAllDeck();

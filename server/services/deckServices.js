@@ -1,12 +1,12 @@
 import { Decks, Cards } from "../models/fk.js";
 
 // ADD DECK
-export const addDeckService = async (deckName) => {
+export const addDeckService = async (userId, deckName) => {
     try {
         if (!deckName) return { success: false, message: "Please enter a deck name." };
 
 
-        const deck = await Decks.create({ deckName });
+        const deck = await Decks.create({ userId, deckName });
 
         return { success: true, message: "Deck created successfully" };
 
