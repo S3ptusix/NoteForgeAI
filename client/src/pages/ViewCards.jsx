@@ -53,7 +53,8 @@ export default function ViewCards() {
                     <p className="font-semibold text-lg">{name}</p>
                     <div className="flex flex-wrap gap-4">
                         <button
-                            className="btn bg-green-600 text-white"
+                            className={`btn text-white ${data.length === 0 ? 'btn-disabled' : 'bg-green-600 cursor-pointer'}`}
+                            disabled={data.length === 0}
                             onClick={() => navigate(`/app/studyMode/${deckId}`)}
                         >
                             <GraduationCap size={16} />

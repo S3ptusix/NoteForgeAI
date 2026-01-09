@@ -5,6 +5,8 @@ import { connectToDatabase } from './config/sequelize.js';
 import deckRouter from './routes/deckRoutes.js';
 import cardRouter from './routes/cardRoutes.js';
 import generateRouter from './routes/generateRoutes.js';
+import userRouter from './routes/userRoutes.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -16,10 +18,12 @@ app.use(cors({
     origin: 'http://localhost:5173', // frontend origin
     credentials: true
 }));
+app.use(cookieParser());
 
 app.use('/api/deck', deckRouter);
 app.use('/api/card', cardRouter);
 app.use('/api/generate', generateRouter);
+app.use('/api/user', userRouter);
 
 // TEST
 app.get('/', (req, res) => {

@@ -4,6 +4,7 @@ import Home from "./pages/home"
 import ViewCards from "./pages/ViewCards"
 import StudyMode from "./pages/StudyMode"
 import LandingPage from "./pages/LandingPage"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 function App() {
 
@@ -20,10 +21,10 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
 
-        <Route path="/app" element={<Home />} />
-        <Route path="/app/viewCards/:deckId" element={<ViewCards />} />
-        <Route path="/app/studyMode/:deckId" element={<StudyMode />} />
-        <Route path="*" element={<Navigate to="/" replace/>} />
+        <Route path="/app" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/app/viewCards/:deckId" element={<ProtectedRoute><ViewCards /></ProtectedRoute>} />
+        <Route path="/app/studyMode/:deckId" element={<ProtectedRoute><StudyMode /></ProtectedRoute>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   )
