@@ -31,7 +31,9 @@ export default function Topbar() {
     }
 
     return (
-        <div className="flex items-center justify-between px-[10vw] py-4 border-b border-gray-300">
+        <div
+            className="flex items-center justify-between px-[10vw] py-4 border-b border-gray-300"
+        >
 
             <Link to={user ? "/app" : "/"} className="flex gap-2 text-blue-600 items-center">
                 <img src="/noteForgeAiIcon.svg" className="h-8 w-8" alt="" />
@@ -75,7 +77,7 @@ export default function Topbar() {
                 ) : (
                     <>
                         <button
-                            className="btn btn-white text-gray-700 border-gray-300 max-md:hidden" 
+                            className="btn btn-white text-gray-700 border-gray-300 max-md:hidden"
                             onClick={() => setModal("login")}
                         >
                             Log in
