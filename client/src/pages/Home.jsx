@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import Topbar from "../components/Topbar";
-import GenerateFlashcards from "../components/GenerateFlashcards";
+import GenerateMaterial from "../components/GenerateMaterial";
 import AddDeck from "../components/addDeck";
 import { useState } from "react";
 import Decks from "../components/Decks";
@@ -34,7 +34,7 @@ export default function Home() {
             <Topbar />
             <div className="grow mx-[10vw] py-4">
 
-                <GenerateFlashcards runFunction={loadAllDeck} />
+                <GenerateMaterial runFunction={loadAllDeck} />
 
                 <div>
                     <div className="flex items-center justify-between mb-4">

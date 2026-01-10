@@ -34,8 +34,8 @@ export default function Topbar() {
         <div className="flex items-center justify-between px-[10vw] py-4 border-b border-gray-300">
 
             <Link to={user ? "/app" : "/"} className="flex gap-2 text-blue-600 items-center">
-                <img src="/note2cardIcon.svg" className="h-8 w-8" alt="" />
-                <p className="font-semibold text-lg">NOTE2CARD</p>
+                <img src="/noteForgeAiIcon.svg" className="h-8 w-8" alt="" />
+                <p className="font-semibold text-lg">NoteForge AI</p>
             </Link>
 
             <div className="flex gap-2">
@@ -75,14 +75,14 @@ export default function Topbar() {
                 ) : (
                     <>
                         <button
-                            className="btn btn-white text-gray-700 border-gray-300"
+                            className="btn btn-white text-gray-700 border-gray-300 max-md:hidden" 
                             onClick={() => setModal("login")}
                         >
                             Log in
                         </button>
 
                         <button
-                            className="btn bg-blue-600 text-white"
+                            className="btn bg-blue-600 text-white max-md:hidden"
                             onClick={() => setModal("register")}
                         >
                             Get Started
