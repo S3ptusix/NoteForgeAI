@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Topbar from "../components/Topbar";
 import { ArrowLeft, GraduationCap, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -42,13 +42,12 @@ export default function ViewCards() {
         <div className="min-h-screen flex flex-col">
             <Topbar />
             <div className="grow mx-[10vw] py-8">
-                <button
+                <Link to={'/app/decks'}
                     className="flex items-center cursor-pointer gap-2 text-gray-700"
-                    onClick={() => navigate('/app')}
                 >
                     <ArrowLeft size={16} />
                     Back to Decks
-                </button>
+                </Link>
                 <div className="flex flex-wrap gap-x-20 gap-y-4 items-center justify-between my-4">
                     <p className="font-semibold text-lg">{name}</p>
                     <div className="flex flex-wrap gap-4">

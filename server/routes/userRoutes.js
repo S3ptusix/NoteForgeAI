@@ -19,5 +19,4 @@ userRouter.get('/me', authenticateUserJWT, meUserController);
 // USER LOGOUT
 userRouter.get('/logout', authenticateUserJWT, logoutUserController);
 
-
 export default userRouter;

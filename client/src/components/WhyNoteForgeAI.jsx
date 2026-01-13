@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { BookOpen, GraduationCap, FileText } from "lucide-react";
+import { GraduationCap, FileText, Layers } from "lucide-react";
 import { motion } from "motion/react";
 import { fadeLeft } from "../animations/reveal";
 
@@ -23,7 +23,7 @@ export default function WhyNoteForgeAI() {
                     viewport={{ once: true, amount: .8 }}
                 >
                     <span className="flex-center bg-blue-600/10 text-blue-600 w-16 h-16 rounded-full">
-                        <BookOpen className="w-8 h-8" />
+                        <Layers className="w-8 h-8" />
                     </span>
                     <p className="text-center text-lg font-semibold my-4">Flashcard Generation</p>
                     <p className="text-center text-lg text-gray-600">Paste your notes and instantly create organized flashcards for effective spaced repetition study sessions.</p>
