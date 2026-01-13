@@ -10,7 +10,6 @@ import { capitalizeWords, fixSpaces } from "../utils/format.js";
 export const RegisterUserService = async (fullname, username, password) => {
     try {
 
-
         if (!fullname?.trim() || !username?.trim() || !password?.trim()) {
             return {
                 success: false,

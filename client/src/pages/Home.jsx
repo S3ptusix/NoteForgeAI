@@ -1,4 +1,5 @@
-import { Plus } from "lucide-react";
+/* eslint-disable no-unused-vars */
+import { FileText, GraduationCap, Layers, Plus } from "lucide-react";
 import Topbar from "../components/Topbar";
 import GenerateMaterial from "../components/GenerateMaterial";
 import AddDeck from "../components/addDeck";
@@ -7,6 +8,7 @@ import Decks from "../components/Decks";
 import { useEffect } from "react";
 import { fetchAllDeck } from "../services/deckServices";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function Home() {
 
@@ -34,9 +36,11 @@ export default function Home() {
             <Topbar />
             <div className="grow mx-[10vw] py-4">
 
-                <GenerateMaterial runFunction={loadAllDeck} />
+                <section className="mb-16">
+                    <GenerateMaterial runFunction={loadAllDeck} />
+                </section>
 
-                <div>
+                {/* <section className="mb-8">
                     <div className="flex items-center justify-between mb-4">
                         <p className="font-semibold">My Decks</p>
 
@@ -53,7 +57,25 @@ export default function Home() {
                         decks={data}
                         loadAllDeck={loadAllDeck}
                     />
-                </div>
+                </section> */}
+
+                <section className="">
+                    <p className="text-center mb-8 font-semibold text-lg">Study Materials</p>
+                    <div className="grid lg:grid-cols-3 gap-4">
+                        <Link to={'/app/decks'} className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-blue-600 text-white hover:saturate-50 duration-150">
+                            <Layers />
+                            <p>Decks</p>
+                        </Link>
+                        <div className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-green-600 text-white hover:saturate-50 duration-150">
+                            <GraduationCap />
+                            <p className="font-semibold">Quizzes</p>
+                        </div>
+                        <div className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-purple-600 text-white hover:saturate-50 duration-150">
+                            <FileText />
+                            <p className="font-semibold">Reviewers</p>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             {openAddDeck &&

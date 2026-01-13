@@ -44,11 +44,11 @@ export default function Topbar() {
                 {user ? (
                     <div className="relative">
                         <button
-                            className="flex items-center gap-1 text-sm text-gray-700 cursor-pointer h-full outline-0"
+                            className="flex items-center gap-1 text-sm text-gray-700 cursor-pointer outline-0 max-md:btn max-md:btn-circle max-md:bg-blue-600 max-md:text-white"
                             onClick={() => setOpenUserMenu(prev => !prev)}
                         >
                             <User size={16} />
-                            {user.fullname}
+                            <p className="max-md:hidden">{user.fullname}</p>
                         </button>
                         {openUserMenu && (
                             <div className="min-w-50 absolute top-[calc(100%+.5rem)] right-0 bg-white border border-gray-300 rounded-lg overflow-hidden shadow-md">
