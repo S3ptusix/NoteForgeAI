@@ -1,6 +1,6 @@
 import { FileText, GraduationCap, Layers, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { generateFlashcard } from "../services/generateServices";
+import { generateFlashcard, generateQuiz } from "../services/generateServices";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
 
@@ -16,12 +16,32 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
             if (success) {
                 runFunction();
                 toast.success(message);
+                setNotes('');
                 return
 
             };
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmitFlashcard:', error);
+        } finally {
+            setloading(false);
+        }
+    }
+
+    const handleSubmitQuiz = async () => {
+        try {
+            setloading(true);
+            const { success, message } = await generateQuiz({ notes: notes });
+            if (success) {
+                runFunction();
+                toast.success(message);
+                setNotes('');
+                return
+
+            };
+            return toast.error(message);
+        } catch (error) {
+            console.error('Error on handleSubmitQuiz:', error);
         } finally {
             setloading(false);
         }
@@ -50,6 +70,7 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
                 <button
                     disabled={loading || notes.trim() === ''}
                     className="flex gap-2 items-center justify-center cursor-pointer bg-green-600 text-white w-full rounded-lg p-4 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
+                    onClick={handleSubmitQuiz}
                 >
                     <GraduationCap size={16} />
                     Generate Quiz

@@ -1,6 +1,7 @@
-import { Decks, Cards, Users } from "../models/fk.js";
-import { generateFlashcard } from "../gemini/gemini.js";
-import { isValidFlashcard } from "../utils/validate.js";
+import { Decks, Cards, Users, Quizzes, Questions } from "../models/fk.js";
+import { generateFlashcard } from '../gemini/flashcard.js'
+import { isValidFlashcard, validateQuestions } from "../utils/validate.js";
+import { generateQuiz } from "../gemini/quiz.js";
 
 // GENERATE FLASHCARD
 export const generateFlashcardService = async (userId, notes) => {
@@ -48,5 +49,58 @@ export const generateFlashcardService = async (userId, notes) => {
             success: false,
             message: "Error while generating flashcards."
         };
+    }
+};
+
+// GENERATE QUIZ
+export const generateQuizService = async (userId, notes) => {
+    try {
+        const user = await Users.findOne({ where: { id: userId } });
+        if (!user) {
+            return { success: false, message: "User not found." };
+        }
+
+        if (!notes?.trim()) {
+            return { success: false, message: "Please enter a note." };
+        }
+
+        const generatedQuiz = await generateQuiz(notes);
+
+        if (typeof generatedQuiz.quizName !== "string") {
+            return { success: false, message: "Error while generating quiz." };
+        }
+
+        const quizName = (generatedQuiz.quizName || "Untitled").trim();
+        const questions = Array.isArray(generatedQuiz.questions) ? generatedQuiz.questions : [];
+
+        if (questions.length === 0) return { success: false, message: "Error while generating quiz." };
+
+        const questionsError = validateQuestions(questions);
+        if (questionsError) {
+            return { success: false, message: "Error while generating quiz." };
+        }
+
+        // Create quiz
+        const quiz = await Quizzes.create({ userId, quizName });
+
+        // Normalize questions
+        const questionsWithQuizId = questions.map((q) => ({
+            quizId: quiz.id,
+            question: (q.question || "").trim(),
+            optionA: (q.optionA || "").trim(),
+            optionB: (q.optionB || "").trim(),
+            optionC: (q.optionC || "").trim(),
+            optionD: (q.optionD || "").trim(),
+            answer: ["A", "B", "C", "D"].includes(q.answer?.toUpperCase()) ? q.answer.toUpperCase() : "A"
+        }));
+
+        await Questions.bulkCreate(questionsWithQuizId);
+
+        return { success: true, message: "Quiz generated successfully." };
+
+    } catch (error) {
+        console.error("Error on generateQuizService:", error);
+
+        return { success: false, message: "Error while generating quiz." };
     }
 };

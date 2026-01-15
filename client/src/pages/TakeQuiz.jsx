@@ -61,7 +61,7 @@ export default function TakeQuiz() {
                 <div className="w-full lg:w-[80%] my-8">
                     <button
                         className="flex gap-2 items-center text-gray-700 cursor-pointer font-semibold"
-                        onClick={() => navigate(`/app`)}
+                        onClick={() => navigate(`/app/quizzes`)}
                     >
                         <ArrowLeft />
                         Exit Quiz
@@ -70,7 +70,7 @@ export default function TakeQuiz() {
 
                 <div className="flex flex-col items-center border border-gray-200 bg-white shadow-md p-8 w-full lg:w-[80%] rounded-lg">
                     <p className="text-xl font-semibold mb-4">Quiz Complete!</p>
-                    <p className="text-xl text-ggray-400 mb-4">Tour Scored {score} of {quiz.questions.length}</p>
+                    <p className="text-xl text-ggray-400 mb-4">Your Scored {score} of {quiz.questions.length}</p>
                     <p className="text-3xl font-bold text-blue-600 mb-4">{(score / quiz.questions.length * 100).toFixed(2)}%</p>
                     <div className="flex gap-4">
                         <button
@@ -97,7 +97,7 @@ export default function TakeQuiz() {
             <div className="w-full lg:w-[80%] my-8">
                 <button
                     className="flex gap-2 items-center text-gray-700 cursor-pointer font-semibold"
-                    onClick={() => navigate(`/app`)}
+                    onClick={() => navigate(`/app/quizzes`)}
                 >
                     <ArrowLeft />
                     Exit Quiz
