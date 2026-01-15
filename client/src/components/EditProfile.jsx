@@ -117,7 +117,7 @@ export default function EditProfile({ onClose }) {
                     </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4">
                     <button
                         className="btn bg-white border-gray-300"
                         onClick={onClose}
