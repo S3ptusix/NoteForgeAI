@@ -78,7 +78,7 @@ export default function StudyMode() {
                 </div>
 
                 <button
-                    className="flex gap-2 items-center text-gray-700 cursor-pointer"
+                    className="flex gap-2 items-center text-gray-700 cursor-pointer font-semibold"
                     onClick={() => navigate(`/app/viewCards/${deckId}`)}
                 >
                     <X />
