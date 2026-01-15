@@ -1,10 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { CirclePlay, Pen, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DeleteQuiz from "./DeleteQuiz";
 
 export default function Quizzes({ quizzes, loadAllQuiz }) {
 
     const navigate = useNavigate();
+
+    const [quizId, setQuizId] = useState(null);
+    const [openDeleteQuiz, setOpenDeleteQuiz] = useState(false);
+
+    const handleDelete = (quizId) => {
+        setQuizId(quizId);
+        setOpenDeleteQuiz(true);
+    }
+
+    // const handleEdit = (deckId) => {
+    //     setQuizId(deckId);
+    //     setOpenEditDeck(true);
+    // }
 
     return (
         <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
@@ -32,6 +47,7 @@ export default function Quizzes({ quizzes, loadAllQuiz }) {
                         </button>
                         <button
                             className="btn btn-square bg-red-600 text-white"
+                            onClick={() => handleDelete(quiz.id)}
                         >
                             <Trash2 size={16} />
                         </button>
@@ -39,22 +55,15 @@ export default function Quizzes({ quizzes, loadAllQuiz }) {
                 </div>
             ))}
 
-            {/* {openAddDeck &&
-                <AddCard
-                    deckId={deckId}
-                    onClose={() => setOpenAddDeck(false)}
-                    runFunction={loadAllDeck}
-                />
-            }
-            {openDeleteDeck &&
-                <DeleteDeck
-                    deckId={deckId}
-                    onClose={() => setOpenDeleteDeck(false)}
-                    loadAllDeck={loadAllDeck}
+            {openDeleteQuiz &&
+                <DeleteQuiz
+                    quizId={quizId}
+                    onClose={() => setOpenDeleteQuiz(false)}
+                    loadAllQuiz={loadAllQuiz}
                 />
             }
 
-            {openEditDeck &&
+            {/* {openEditDeck &&
                 <EditDeck
                     deckId={deckId}
                     onClose={() => setOpenEditDeck(false)}

@@ -1,5 +1,5 @@
 import express from 'express';
-import { addQuizController, fetchAllQuizController } from '../controllers/quizController.js';
+import { addQuizController, deleteQuizController, fetchAllQuizController } from '../controllers/quizController.js';
 import { authenticateUserJWT } from '../middleware/auth.js';
 
 const quizRouter = express.Router();
@@ -9,5 +9,8 @@ quizRouter.post('/add', authenticateUserJWT, addQuizController);
 
 // FETCH ALL DECK
 quizRouter.get('/fetchAll', authenticateUserJWT, fetchAllQuizController);
+
+// DELETE DECK
+quizRouter.delete('/delete/:quizId', deleteQuizController);
 
 export default quizRouter;

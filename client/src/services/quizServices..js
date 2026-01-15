@@ -29,3 +29,17 @@ export const fetchAllQuiz = async () => {
         };
     }
 };
+
+// DELETE QUIZ
+export const deleteQuiz = async (quizId) => {
+    try {
+        const response = await axios.delete(`${API_URL}/api/quiz/delete/${quizId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on deleteQuiz:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to delete quiz'
+        };
+    }
+};

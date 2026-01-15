@@ -38,15 +38,14 @@ export default function AddQuiz({ onClose, loadAllQuiz }) {
         try {
             const { success, message } = await addQuiz({ quizName, questions });
             if (success) {
-                toast.success(message);
+                loadAllQuiz();
                 onClose();
-                return;
+                return toast.success(message);;
             }
             return toast.error(message);
         } catch (error) {
             console.log('Error on handleSubmit:', error);
         }
-        loadAllQuiz();
     }
 
     return (

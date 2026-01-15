@@ -57,16 +57,46 @@ export const fetchAllQuizService = async (userId) => {
 
             include: {
                 model: Questions,
-                attributes: [],     
+                attributes: [],
                 required: false      // keep quizzes even if 0 questions
             },
 
             group: ['quiz.id']
         });
 
-        return {success: true, quizzes}
+        return { success: true, quizzes }
     } catch (error) {
         console.error("Error in fetchAllQuizService:", error);
         return { success: false, message: "Failed to fetch all quiz." };
     }
 }
+
+// DELETE QUIZ
+export const deleteQuizService = async (quizId) => {
+    try {
+
+        if (!quizId) {
+            return { success: false, message: "Quiz ID is required" };
+        }
+
+        const rowsAffected = await Quizzes.destroy({
+            where: { id: quizId }
+        });
+
+        if (!rowsAffected) {
+            return { success: false, message: "Quiz not found." };
+        }
+
+        return {
+            success: true,
+            message: "Quiz deleted successfully"
+        };
+
+    } catch (error) {
+        console.log("Error on deleteQuizService:", error);
+        return {
+            success: false,
+            message: "Error on deleteQuizService"
+        };
+    }
+};
