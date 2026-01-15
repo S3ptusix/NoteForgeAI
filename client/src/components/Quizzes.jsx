@@ -3,6 +3,7 @@ import { CirclePlay, Pen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DeleteQuiz from "./DeleteQuiz";
+import EditQuiz from "./editQuiz";
 
 export default function Quizzes({ quizzes, loadAllQuiz }) {
 
@@ -10,16 +11,17 @@ export default function Quizzes({ quizzes, loadAllQuiz }) {
 
     const [quizId, setQuizId] = useState(null);
     const [openDeleteQuiz, setOpenDeleteQuiz] = useState(false);
+    const [openEditQuiz, setOpenEditQuiz] = useState(false);
 
     const handleDelete = (quizId) => {
         setQuizId(quizId);
         setOpenDeleteQuiz(true);
     }
 
-    // const handleEdit = (deckId) => {
-    //     setQuizId(deckId);
-    //     setOpenEditDeck(true);
-    // }
+    const handleEdit = (deckId) => {
+        setQuizId(deckId);
+        setOpenEditQuiz(true);
+    }
 
     return (
         <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
@@ -30,7 +32,7 @@ export default function Quizzes({ quizzes, loadAllQuiz }) {
                     </div>
 
                     <p className="mb-4 text-gray-400">
-                        {quiz.questionCount} {quiz.questionCount === 1 ? "question" : "questions"}
+                        {quiz.questions.length} {quiz.questions.length === 1 ? "question" : "questions"}
                     </p>
 
                     <div className="flex gap-2">
@@ -42,6 +44,7 @@ export default function Quizzes({ quizzes, loadAllQuiz }) {
                         </button>
                         <button
                             className="btn btn-square bg-blue-600 text-white"
+                            onClick={() => handleEdit(quiz.id)}
                         >
                             <Pen size={16} />
                         </button>
@@ -63,13 +66,13 @@ export default function Quizzes({ quizzes, loadAllQuiz }) {
                 />
             }
 
-            {/* {openEditDeck &&
-                <EditDeck
-                    deckId={deckId}
-                    onClose={() => setOpenEditDeck(false)}
-                    runFunction={loadAllDeck}
+            {openEditQuiz &&
+                <EditQuiz
+                    quizId={quizId}
+                    onClose={() => setOpenEditQuiz(false)}
+                    loadAllQuiz={loadAllQuiz}
                 />
-            } */}
+            }
         </div>
     );
 }

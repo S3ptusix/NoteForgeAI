@@ -30,6 +30,20 @@ export const fetchAllQuiz = async () => {
     }
 };
 
+// FETCH ONE QUIZ
+export const fetchOneQuiz = async (quizId) => {
+    try {
+        const response = await axios.get(`${API_URL}/api/quiz/fetch/${quizId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on fetchOneQuiz:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to fetch quiz'
+        };
+    }
+};
+
 // DELETE QUIZ
 export const deleteQuiz = async (quizId) => {
     try {
@@ -40,6 +54,20 @@ export const deleteQuiz = async (quizId) => {
         return {
             success: false,
             message: error.response?.data?.message || 'Failed to delete quiz'
+        };
+    }
+};
+
+// EDIT QUIZ
+export const editQuiz = async (formData) => {
+    try {
+        const response = await axios.put(`${API_URL}/api/quiz/edit`, formData);
+        return response.data;
+    } catch (error) {
+        console.error('Error on editQuiz:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to edit quiz'
         };
     }
 };
