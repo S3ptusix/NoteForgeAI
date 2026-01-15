@@ -66,10 +66,10 @@ export default function Home() {
                             <Layers />
                             <p>Decks</p>
                         </Link>
-                        <div className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-green-600 text-white hover:saturate-50 duration-150">
+                        <Link to={'/app/quizzes'} className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-green-600 text-white hover:saturate-50 duration-150">
                             <GraduationCap />
                             <p className="font-semibold">Quizzes</p>
-                        </div>
+                        </Link>
                         <div className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-purple-600 text-white hover:saturate-50 duration-150">
                             <FileText />
                             <p className="font-semibold">Reviewers</p>

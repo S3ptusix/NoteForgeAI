@@ -7,6 +7,7 @@ import cardRouter from './routes/cardRoutes.js';
 import generateRouter from './routes/generateRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import cookieParser from 'cookie-parser';
+import quizRouter from './routes/quizRoutes.js';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use('/api/deck', deckRouter);
 app.use('/api/card', cardRouter);
 app.use('/api/generate', generateRouter);
 app.use('/api/user', userRouter);
+app.use('/api/quiz', quizRouter);
 
 // TEST
 app.get('/', (req, res) => {

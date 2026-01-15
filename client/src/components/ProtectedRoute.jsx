@@ -5,7 +5,7 @@ import Loading from "./Loading";
 
 export default function ProtectedRoute({ children }) {
     const { user, loading } = useContext(UserContext);
-
+    
     if (loading) return <Loading />;
     if (!user) {
         return <Navigate to="/" replace />;
