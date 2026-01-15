@@ -1,9 +1,11 @@
-/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import Topbar from "../components/Topbar";
 import { ArrowLeft, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddQuiz from "../components/AddQuiz";
+import Quizzes from "../components/Quizzes";
+import { fetchAllQuiz } from "../services/quizServices.";
+import { toast } from "react-toastify";
 
 export default function QuizzesPage() {
 
@@ -11,20 +13,20 @@ export default function QuizzesPage() {
     const [data, setData] = useState([]);
 
     const loadAllQuiz = async () => {
-        // try {
-        //     const { success, message, decks } = await fetchAllDeck();
-        //     if (success) return setData(decks);
-        //     toast.error(message);
-        // } catch (error) {
-        //     console.error('Error on loadAllDeck:', error)
-        // }
+        try {
+            const { success, message, quizzes } = await fetchAllQuiz();
+            if (success) return setData(quizzes);
+            toast.error(message);
+        } catch (error) {
+            console.error('Error on loadAllDeck:', error)
+        }
     }
 
-    // useEffect(() => {
-    //     queueMicrotask(() => {
-    //         loadAllDeck();
-    //     });
-    // }, []);
+    useEffect(() => {
+        queueMicrotask(() => {
+            loadAllQuiz();
+        });
+    }, []);
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -49,10 +51,10 @@ export default function QuizzesPage() {
                         </button>
                     </div>
 
-                    {/* <Decks
-                        decks={data}
-                        loadAllDeck={loadAllDeck}
-                    /> */}
+                    <Quizzes
+                    quizzes={data}
+                    loadAllQuiz={loadAllQuiz}
+                    />
                 </section>
             </div>
             {openAddQuiz &&

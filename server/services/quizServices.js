@@ -1,3 +1,4 @@
+import { Sequelize } from "sequelize";
 import { Quizzes, Questions, Users } from "../models/fk.js";
 import { validateQuestions } from "../utils/validate.js";
 
@@ -38,3 +39,34 @@ export const addQuizService = async (userId, quizName, questions) => {
         return { success: false, message: "Failed to create quiz." };
     }
 };
+
+// FETCH ALL QUIZ
+export const fetchAllQuizService = async (userId) => {
+    try {
+        const user = await Users.findByPk(userId);
+        if (!user) {
+            return { success: false, message: "User not found." };
+        }
+
+        const quizzes = await Quizzes.findAll({
+            attributes: [
+                'id',
+                'quizName',
+                [Sequelize.fn('COUNT', Sequelize.col('questions.id')), 'questionCount']
+            ],
+
+            include: {
+                model: Questions,
+                attributes: [],     
+                required: false      // keep quizzes even if 0 questions
+            },
+
+            group: ['quiz.id']
+        });
+
+        return {success: true, quizzes}
+    } catch (error) {
+        console.error("Error in fetchAllQuizService:", error);
+        return { success: false, message: "Failed to fetch all quiz." };
+    }
+}

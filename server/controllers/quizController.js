@@ -1,4 +1,4 @@
-import { addQuizService } from "../services/quizServices.js";
+import { addQuizService, fetchAllQuizService } from "../services/quizServices.js";
 
 
 // ADD QUIZ
@@ -10,6 +10,18 @@ export const addQuizController = async (req, res) => {
         return res.json(result);
     } catch (error) {
         console.error("Error on addQuizController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// FETCH QUIZ
+export const fetchAllQuizController = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const result = await fetchAllQuizService(userId);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on fetchAllQuizController:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

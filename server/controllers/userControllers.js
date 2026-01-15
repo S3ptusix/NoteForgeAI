@@ -42,7 +42,7 @@ export const LoginUserController = async (req, res) => {
         return res.json({ success: false, message: "Server error" });
     }
 };
-
+ 
 // EDIT USER
 export const editUserController = async (req, res) => {
     try {
