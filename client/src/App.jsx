@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import UserProtectedRoute from "./components/UserProtectedRoute"
 import DecksPage from "./pages/DecksPage"
 import QuizzesPage from "./pages/QuizzesPage"
+import TakeQuiz from "./pages/TakeQuiz"
 
 function App() {
 
@@ -27,8 +28,9 @@ function App() {
         <Route path="/app" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/app/viewCards/:deckId" element={<ProtectedRoute><ViewCards /></ProtectedRoute>} />
         <Route path="/app/studyMode/:deckId" element={<ProtectedRoute><StudyMode /></ProtectedRoute>} />
-        <Route path="/app/Decks/" element={<ProtectedRoute><DecksPage /></ProtectedRoute>} />
-        <Route path="/app/quizzes/" element={<ProtectedRoute><QuizzesPage /></ProtectedRoute>} />
+        <Route path="/app/Decks" element={<ProtectedRoute><DecksPage /></ProtectedRoute>} />
+        <Route path="/app/quizzes" element={<ProtectedRoute><QuizzesPage /></ProtectedRoute>} />
+        <Route path="/app/takeQuiz/:quizId" element={<ProtectedRoute><TakeQuiz /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

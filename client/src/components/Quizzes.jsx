@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { CirclePlay, Pen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +37,7 @@ export default function Quizzes({ quizzes, loadAllQuiz }) {
                     <div className="flex gap-2">
                         <button
                             className="btn grow bg-green-600 text-white"
+                            onClick={() => navigate(`/app/takeQuiz/${quiz.id}`)}
                         >
                             <CirclePlay size={16} />
                             Take Quiz
