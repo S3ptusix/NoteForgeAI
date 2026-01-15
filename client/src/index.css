@@ -14,7 +14,7 @@
     }
 
     .modal-style>div {
-        @apply p-8 rounded-lg bg-white w-[calc(min(500px,100%))];
+        @apply p-8 rounded-lg bg-white w-[calc(min(500px,100%))] max-h-screen overflow-auto;
     }
 
     .modal-title {
