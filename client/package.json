@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@tiptap/extension-highlight": "^3.15.3",
+    "@tiptap/react": "^3.15.3",
+    "@tiptap/starter-kit": "^3.15.3",
     "axios": "^1.13.2",
     "daisyui": "^5.5.14",
     "lucide-react": "^0.562.0",

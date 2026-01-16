@@ -13,8 +13,12 @@
         @apply fixed top-0 bottom-0 left-0 right-0 bg-black/25 flex items-center justify-center z-999;
     }
 
-    .modal-style>div {
+    .modal-style>div:not(.wide-modal) {
         @apply p-8 rounded-lg bg-white w-[calc(min(500px,100%))] max-h-screen overflow-auto;
+    }
+
+    .modal-style>.wide-modal {
+        @apply p-8 rounded-lg bg-white w-[80vw] max-h-screen overflow-auto;
     }
 
     .modal-title {
@@ -23,5 +27,28 @@
 
     .input {
         @apply -outline-offset-1 focus:outline-blue-600;
+    }
+
+    /* .EditorContent {
+        @apply p-2 min-h-45 prose max-w-none border border-gray-300;
+    } */
+
+    .EditorContent ul {
+        @apply ml-4 list-disc;
+    }
+
+    .EditorContent ol {
+        @apply ml-4 list-decimal;
+    }
+
+    .EditorContent h1 {
+        @apply text-2xl;
+    }
+
+    .EditorContent h2 {
+        @apply text-xl;
+    }
+    .EditorContent h3 {
+        @apply text-lg;
     }
 }

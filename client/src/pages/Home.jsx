@@ -70,10 +70,10 @@ export default function Home() {
                             <GraduationCap />
                             <p className="font-semibold">Quizzes</p>
                         </Link>
-                        <div className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-purple-600 text-white hover:saturate-50 duration-150">
+                        <Link to={'/app/reviewers'} className="border p-8 flex-center flex-col gap-2 cursor-pointer rounded-lg bg-purple-600 text-white hover:saturate-50 duration-150">
                             <FileText />
                             <p className="font-semibold">Reviewers</p>
-                        </div>
+                        </Link>
                     </div>
                 </section>
             </div>

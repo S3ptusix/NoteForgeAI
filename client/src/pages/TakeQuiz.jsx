@@ -120,10 +120,11 @@ export default function TakeQuiz() {
                     <p className="text-lg font-semibold my-4">{quiz.questions[number - 1].question}</p>
                     <button
                         className={`flex justify-between items-center w-full text-left p-4 border-2 rounded-lg font-semibold text-sm mb-4 cursor-pointer 
-                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 
+                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 disabled:pointer-events-none
                             ${!showAnswer && selectedAnswer === 'A' ? 'bg-blue-600/20 border-blue-600' : 'border-gray-300'}
                             ${showAnswer && selectedAnswer === 'A' ? correctAnswer === 'A' ? 'bg-green-600/20 border-green-600' : 'bg-red-600/20 border-red-600' : correctAnswer === 'A' ? 'bg-green-600/20 border-green-600' : ''}
                             `}
+                        disabled={showAnswer}
                         onClick={() => setSelectedAnswer('A')}
                     >
                         <span>A. {quiz.questions[number - 1].optionA}</span>
@@ -131,10 +132,11 @@ export default function TakeQuiz() {
                     </button>
                     <button
                         className={`flex justify-between items-center w-full text-left p-4 border-2 rounded-lg font-semibold text-sm mb-4 cursor-pointer 
-                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 
+                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 disabled:pointer-events-none
                             ${!showAnswer && selectedAnswer === 'B' ? 'bg-blue-600/20 border-blue-600' : 'border-gray-300'}
                             ${showAnswer && selectedAnswer === 'B' ? correctAnswer === 'B' ? 'bg-green-600/20 border-green-600' : 'bg-red-600/20 border-red-600' : correctAnswer === 'B' ? 'bg-green-600/20 border-green-600' : ''}
                             `}
+                        disabled={showAnswer}
                         onClick={() => setSelectedAnswer('B')}
                     >
                         <span>B. {quiz.questions[number - 1].optionB}</span>
@@ -142,10 +144,11 @@ export default function TakeQuiz() {
                     </button>
                     <button
                         className={`flex justify-between items-center w-full text-left p-4 border-2 rounded-lg font-semibold text-sm mb-4 cursor-pointer 
-                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 
+                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 disabled:pointer-events-none
                             ${!showAnswer && selectedAnswer === 'C' ? 'bg-blue-600/20 border-blue-600' : 'border-gray-300'}
                             ${showAnswer && selectedAnswer === 'C' ? correctAnswer === 'C' ? 'bg-green-600/20 border-green-600' : 'bg-red-600/20 border-red-600' : correctAnswer === 'C' ? 'bg-green-600/20 border-green-600' : ''}
                             `}
+                        disabled={showAnswer}
                         onClick={() => setSelectedAnswer('C')}
                     >
                         <span>C. {quiz.questions[number - 1].optionC}</span>
@@ -153,10 +156,11 @@ export default function TakeQuiz() {
                     </button>
                     <button
                         className={`flex justify-between items-center w-full text-left p-4 border-2 rounded-lg font-semibold text-sm mb-4 cursor-pointer 
-                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 
+                            hover:bg-blue-600/10 hover:border-blue-600/50 duration-150 disabled:pointer-events-none
                             ${!showAnswer && selectedAnswer === 'D' ? 'bg-blue-600/20 border-blue-600' : 'border-gray-300'}
                             ${showAnswer && selectedAnswer === 'D' ? correctAnswer === 'D' ? 'bg-green-600/20 border-green-600' : 'bg-red-600/20 border-red-600' : correctAnswer === 'D' ? 'bg-green-600/20 border-green-600' : ''}
                             `}
+                        disabled={showAnswer}
                         onClick={() => setSelectedAnswer('D')}
                     >
                         <span>D. {quiz.questions[number - 1].optionD}</span>

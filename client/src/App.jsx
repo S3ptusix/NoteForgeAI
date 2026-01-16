@@ -9,6 +9,7 @@ import UserProtectedRoute from "./components/UserProtectedRoute"
 import DecksPage from "./pages/DecksPage"
 import QuizzesPage from "./pages/QuizzesPage"
 import TakeQuiz from "./pages/TakeQuiz"
+import ReviewersPage from "./pages/ReviewersPage"
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/app/Decks" element={<ProtectedRoute><DecksPage /></ProtectedRoute>} />
         <Route path="/app/quizzes" element={<ProtectedRoute><QuizzesPage /></ProtectedRoute>} />
         <Route path="/app/takeQuiz/:quizId" element={<ProtectedRoute><TakeQuiz /></ProtectedRoute>} />
+        <Route path="/app/reviewers" element={<ProtectedRoute><ReviewersPage /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
