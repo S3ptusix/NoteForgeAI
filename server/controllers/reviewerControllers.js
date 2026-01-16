@@ -1,4 +1,4 @@
-import { addReviewerService, fetchAllReviewerService } from "../services/reviewerServices.js";
+import { addReviewerService, deleteReviewerService, fetchAllReviewerService } from "../services/reviewerServices.js";
 
 // ADD REVIEWER
 export const addReviewerController = async (req, res) => {
@@ -21,6 +21,18 @@ export const fetchAllReviewerController = async (req, res) => {
         return res.json(result);
     } catch (error) {
         console.error("Error on fetchAllReviewerController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// DELETE REVIEWER
+export const deleteReviewerContoller = async (req, res) => {
+    try {
+        const { reviewerId } = req.params;
+        const result = await deleteReviewerService(reviewerId);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on deleteReviewerContoller:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

@@ -1,7 +1,17 @@
 import { Eye, Trash2 } from "lucide-react";
+import { useState } from "react";
+import DeleteReviewer from "./DeleteReviewer";
 
-/* eslint-disable no-unused-vars */
-export default function Reviewers({ reviewers, loadReviewers }) {
+export default function Reviewers({ reviewers, loadAllReviewer }) {
+
+    const [reviewerId, setReviewerId] = useState(null);
+
+    const [openDeleteReviewer, setOpenDeleteReviewer] = useState(false);
+
+    const handleDelete = (reviewerId) => {
+        setReviewerId(reviewerId);
+        setOpenDeleteReviewer(true);
+    }
 
     return (
         <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
@@ -10,7 +20,7 @@ export default function Reviewers({ reviewers, loadReviewers }) {
                     <div className="flex items-center justify-between mb-4">
                         <p className="font-semibold">{reviewer.reviewerName}</p>
                     </div>
-                    
+
                     <div className="relative mb-4">
                         <div
                             className="EditorContent h-16 overflow-hidden wrap-break-word text-gray-400"
@@ -33,7 +43,7 @@ export default function Reviewers({ reviewers, loadReviewers }) {
 
                         <button
                             className="btn btn-square bg-red-600 text-white"
-                        // onClick={() => handleDelete(quiz.id)}
+                            onClick={() => handleDelete(reviewer.id)}
                         >
                             <Trash2 size={16} />
                         </button>
@@ -41,13 +51,13 @@ export default function Reviewers({ reviewers, loadReviewers }) {
                 </div>
             ))}
 
-            {/* {openDeleteQuiz &&
-                <DeleteQuiz
-                    quizId={quizId}
-                    onClose={() => setOpenDeleteQuiz(false)}
-                    loadAllQuiz={loadAllQuiz}
+            {openDeleteReviewer &&
+                <DeleteReviewer
+                    reviewerId={reviewerId}
+                    onClose={() => setOpenDeleteReviewer(false)}
+                    loadAllReviewer={loadAllReviewer}
                 />
-            } */}
+            }
         </div>
     );
 }

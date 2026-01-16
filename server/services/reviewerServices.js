@@ -48,3 +48,33 @@ export const fetchAllReviewerService = async (userId) => {
         return { success: false, message: 'Error on fetchAllReviewerService' };
     }
 };
+
+// DELETE REVIEWER
+export const deleteReviewerService = async (reviewerId) => {
+    try {
+
+        if (!reviewerId) {
+            return { success: false, message: "Reviewer ID is required" };
+        }
+
+        const rowsAffected = await Reviewers.destroy({
+            where: { id: reviewerId }
+        });
+
+        if (!rowsAffected) {
+            return { success: false, message: "Reviewer not found." };
+        }
+
+        return {
+            success: true,
+            message: "Reviewer deleted successfully"
+        };
+
+    } catch (error) {
+        console.log("Error on deleteReviewerService:", error);
+        return {
+            success: false,
+            message: "Error on deleteReviewerService"
+        };
+    }
+};

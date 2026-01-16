@@ -29,3 +29,17 @@ export const fetchAllReviewer = async () => {
         };
     }
 };
+
+// DELETE REVIEWER
+export const deleteReviewer = async (reviewerId) => {
+    try {
+        const response = await axios.delete(`${API_URL}/api/reviewer/delete/${reviewerId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on deleteReviewer:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to delete reviewer'
+        };
+    }
+};

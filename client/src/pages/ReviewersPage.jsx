@@ -12,19 +12,19 @@ export default function ReviewersPage() {
     const [openAddReviewer, setOpenAddReviewer] = useState(false);
     const [data, setData] = useState([]);
 
-    const loadReviewers = async () => {
+    const loadAllReviewer = async () => {
         try {
             const { success, message, reviewers } = await fetchAllReviewer();
             if (success) return setData(reviewers);
             return toast.error(message);
         } catch (error) {
-            console.error('Error on loadReviewers:', error);
+            console.error('Error on loadAllReviewer:', error);
         }
     }
 
     useEffect(() => {
         queueMicrotask(() => {
-            loadReviewers();
+            loadAllReviewer();
         });
     }, []);
 
@@ -53,14 +53,14 @@ export default function ReviewersPage() {
 
                     <Reviewers
                         reviewers={data}
-                        loadReviewers={loadReviewers}
+                        loadAllReviewer={loadAllReviewer}
                     />
                 </section>
             </div>
             {openAddReviewer &&
                 <AddReviewer
                     onClose={() => setOpenAddReviewer(false)}
-                    loadReviewers={loadReviewers}
+                    loadAllReviewer={loadAllReviewer}
                 />
             }
         </div>
