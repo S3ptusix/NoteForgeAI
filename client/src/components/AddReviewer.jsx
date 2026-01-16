@@ -5,7 +5,7 @@ import { cleanHTML } from "../utils/format";
 import { addReviewer } from "../services/ReviewerServices";
 import { toast } from "react-toastify";
 
-export default function AddReviewer({ onClose }) {
+export default function AddReviewer({ onClose, loadReviewers }) {
 
     const [reviewerName, setReviewerName] = useState('');
     const [content, setContent] = useState('');
@@ -15,6 +15,7 @@ export default function AddReviewer({ onClose }) {
             const { success, message } = await addReviewer({ reviewerName, content });
             if (success) {
                 toast.success(message);
+                loadReviewers();
                 onClose();
                 return
             }

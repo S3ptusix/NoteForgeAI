@@ -15,3 +15,17 @@ export const addReviewer = async (formData) => {
         };
     }
 };
+
+// FETCH ALL REVIEWER
+export const fetchAllReviewer = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/api/reviewer/fetchAll`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error('Error on fetchAllReviewer:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to fetch reviewer'
+        };
+    }
+};

@@ -1,10 +1,13 @@
 import express from 'express';
-import { addReviewerController } from '../controllers/reviewerControllers.js';
+import { addReviewerController, fetchAllReviewerController } from '../controllers/reviewerControllers.js';
 import { authenticateUserJWT } from '../middleware/auth.js';
 
 const reviewerRoute = express.Router();
 
 // ADD REVIEWER 
 reviewerRoute.post('/add', authenticateUserJWT, addReviewerController);
+
+// FETCH ALL REVIEWER 
+reviewerRoute.get('/fetchAll', authenticateUserJWT, fetchAllReviewerController);
 
 export default reviewerRoute;

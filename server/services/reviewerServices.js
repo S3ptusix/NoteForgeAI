@@ -27,3 +27,24 @@ export const addReviewerService = async (userId, reviewerName, content) => {
         return { success: false, message: 'Error on addReviewerService' };
     }
 };
+
+// FETCH ALL REVIEWER
+export const fetchAllReviewerService = async (userId) => {
+    try {
+        const user = await Users.findOne({ where: { id: userId } });
+
+        if (!user) {
+            return { success: false, message: "User not found." };
+        }
+
+        const reviewers = await Reviewers.findAll({
+            attributes: ['id', 'reviewerName', 'content'],
+            where: { userId }
+        })
+
+        return { success: true, reviewers };
+    } catch (error) {
+        console.log('Error on fetchAllReviewerService:', error);
+        return { success: false, message: 'Error on fetchAllReviewerService' };
+    }
+};

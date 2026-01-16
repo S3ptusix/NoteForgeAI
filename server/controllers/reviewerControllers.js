@@ -1,4 +1,4 @@
-import { addReviewerService } from "../services/reviewerServices.js";
+import { addReviewerService, fetchAllReviewerService } from "../services/reviewerServices.js";
 
 // ADD REVIEWER
 export const addReviewerController = async (req, res) => {
@@ -9,6 +9,18 @@ export const addReviewerController = async (req, res) => {
         return res.json(result);
     } catch (error) {
         console.error("Error on addReviewerController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// FETCH ALL REVIEWER
+export const fetchAllReviewerController = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const result = await fetchAllReviewerService(userId);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on fetchAllReviewerController:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

@@ -1,12 +1,32 @@
 import { ArrowLeft, Plus } from "lucide-react";
 import Topbar from "../components/Topbar";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddReviewer from "../components/AddReviewer";
+import { fetchAllReviewer } from "../services/ReviewerServices";
+import { toast } from "react-toastify";
+import Reviewers from "../components/Reviewers";
 
 export default function ReviewersPage() {
 
     const [openAddReviewer, setOpenAddReviewer] = useState(false);
+    const [data, setData] = useState([]);
+
+    const loadReviewers = async () => {
+        try {
+            const { success, message, reviewers } = await fetchAllReviewer();
+            if (success) return setData(reviewers);
+            return toast.error(message);
+        } catch (error) {
+            console.error('Error on loadReviewers:', error);
+        }
+    }
+
+    useEffect(() => {
+        queueMicrotask(() => {
+            loadReviewers();
+        });
+    }, []);
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -30,11 +50,17 @@ export default function ReviewersPage() {
                             New Reviewer
                         </button>
                     </div>
+
+                    <Reviewers
+                        reviewers={data}
+                        loadReviewers={loadReviewers}
+                    />
                 </section>
             </div>
             {openAddReviewer &&
                 <AddReviewer
                     onClose={() => setOpenAddReviewer(false)}
+                    loadReviewers={loadReviewers}
                 />
             }
         </div>
