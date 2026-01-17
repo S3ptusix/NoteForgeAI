@@ -1,16 +1,23 @@
-import { Eye, Trash2 } from "lucide-react";
+import { Eye, Pen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import DeleteReviewer from "./DeleteReviewer";
+import EditReviewer from "./EditReviewer";
 
 export default function Reviewers({ reviewers, loadAllReviewer }) {
 
     const [reviewerId, setReviewerId] = useState(null);
 
     const [openDeleteReviewer, setOpenDeleteReviewer] = useState(false);
+    const [openEditReviewer, setOpenEditReviewer] = useState(false);
 
     const handleDelete = (reviewerId) => {
         setReviewerId(reviewerId);
         setOpenDeleteReviewer(true);
+    }
+
+    const handleEdit = (reviewerId) => {
+        setReviewerId(reviewerId);
+        setOpenEditReviewer(true);
     }
 
     return (
@@ -42,6 +49,13 @@ export default function Reviewers({ reviewers, loadAllReviewer }) {
                         </button>
 
                         <button
+                            className="btn btn-square bg-blue-600 text-white"
+                            onClick={() => handleEdit(reviewer.id)}
+                        >
+                            <Pen size={16} />
+                        </button>
+
+                        <button
                             className="btn btn-square bg-red-600 text-white"
                             onClick={() => handleDelete(reviewer.id)}
                         >
@@ -55,6 +69,13 @@ export default function Reviewers({ reviewers, loadAllReviewer }) {
                 <DeleteReviewer
                     reviewerId={reviewerId}
                     onClose={() => setOpenDeleteReviewer(false)}
+                    loadAllReviewer={loadAllReviewer}
+                />
+            }
+            {openEditReviewer &&
+                <EditReviewer
+                    reviewerId={reviewerId}
+                    onClose={() => setOpenEditReviewer(false)}
                     loadAllReviewer={loadAllReviewer}
                 />
             }

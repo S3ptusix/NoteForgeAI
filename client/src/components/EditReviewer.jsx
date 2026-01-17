@@ -1,23 +1,24 @@
-import { X } from "lucide-react"
-import { useState } from "react"
-import RichTextEditor from "./RichTextEditor";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { cleanHTML } from "../utils/format";
-import { addReviewer } from "../services/ReviewerServices";
+import RichTextEditor from "./RichTextEditor";
+import { X } from "lucide-react";
+import { editReviewer, fetchOneReviewer } from "../services/ReviewerServices";
 import { toast } from "react-toastify";
 
-export default function AddReviewer({ onClose, loadAllReviewer }) {
+export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
 
     const [reviewerName, setReviewerName] = useState('');
     const [content, setContent] = useState('');
 
     const handleSubmit = async () => {
         try {
-            const { success, message } = await addReviewer({ reviewerName, content });
+            const { success, message } = await editReviewer({ reviewerId, reviewerName, content });
             if (success) {
                 toast.success(message);
                 loadAllReviewer();
                 onClose();
-                return
+                return;
             }
             return toast.error(message);
         } catch (error) {
@@ -25,11 +26,30 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
         }
     }
 
+    useEffect(() => {
+        try {
+            const loadReviewer = async () => {
+                const { success, message, reviewer } = await fetchOneReviewer(reviewerId);
+                if (success) {
+                    setReviewerName(reviewer.reviewerName);
+                    setContent(reviewer.content);
+                    return
+                }
+                return toast.error(message);
+            }
+            loadReviewer();
+        } catch (error) {
+            console.error('Error on LoadReviewer:', error);
+        }
+    }, []);
+
+    if (!reviewerId || !reviewerName || !content) return;
+
     return (
         <div className="modal-style">
             <div className="wide-modal">
                 <div className="modal-title">
-                    <p className="font-semibold">Create Reviewer</p>
+                    <p className="font-semibold">Edit Reviewer</p>
                     <button
                         className="btn btn-square btn-ghost"
                         onClick={onClose}
@@ -42,17 +62,14 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
                     type="text"
                     placeholder="Enter reviewer name"
                     className="input w-full mb-4"
+                    value={reviewerName}
                     onChange={(e) => setReviewerName(e.target.value)}
                 />
 
                 <p className="font-semibold mb-1 text-gray-700 text-sm">Content</p>
-                {/* <textarea
-                    placeholder="Enter the answer..."
-                    className="border border-gray-300 w-full p-4 rounded-md h-100 mb-4 resize-none focus:outline-blue-700"
-                    onChange={(e) => setContent(e.target.value)}
-                /> */}
                 <div className="mb-4">
                     <RichTextEditor
+                        content={content}
                         setContent={(html) =>
                             setContent(cleanHTML(html))
                         }
@@ -64,7 +81,7 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
                         className="grow btn bg-blue-600 text-white"
                         onClick={handleSubmit}
                     >
-                        Create reviewer
+                        Update reviewer
                     </button>
                     <button
                         className="btn border-gray-300"

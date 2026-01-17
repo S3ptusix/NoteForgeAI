@@ -1,4 +1,4 @@
-import { addReviewerService, deleteReviewerService, fetchAllReviewerService } from "../services/reviewerServices.js";
+import { addReviewerService, deleteReviewerService, editReviewerService, fetchAllReviewerService, fetchOneReviewerService } from "../services/reviewerServices.js";
 
 // ADD REVIEWER
 export const addReviewerController = async (req, res) => {
@@ -25,6 +25,18 @@ export const fetchAllReviewerController = async (req, res) => {
     }
 };
 
+// FETCH ONE REVIEWER
+export const fetchOneReviewerController = async (req, res) => {
+    try {
+        const { reviewerId } = req.params;
+        const result = await fetchOneReviewerService(reviewerId);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on fetchOneReviewerController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
 // DELETE REVIEWER
 export const deleteReviewerContoller = async (req, res) => {
     try {
@@ -33,6 +45,18 @@ export const deleteReviewerContoller = async (req, res) => {
         return res.json(result);
     } catch (error) {
         console.error("Error on deleteReviewerContoller:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// EDIT REVIEWER
+export const editReviewerController = async (req, res) => {
+    try {
+        const { reviewerId, reviewerName, content } = req.body;
+        const result = await editReviewerService(reviewerId, reviewerName, content);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on addReviewerController:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

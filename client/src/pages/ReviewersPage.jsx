@@ -10,6 +10,7 @@ import Reviewers from "../components/Reviewers";
 export default function ReviewersPage() {
 
     const [openAddReviewer, setOpenAddReviewer] = useState(false);
+
     const [data, setData] = useState([]);
 
     const loadAllReviewer = async () => {
@@ -41,7 +42,6 @@ export default function ReviewersPage() {
                 <section className="my-4">
                     <div className="flex items-center justify-between mb-4">
                         <p className="font-semibold">My Reviewers</p>
-
                         <button
                             className="btn bg-violet-600 text-white"
                             onClick={() => setOpenAddReviewer(true)}
