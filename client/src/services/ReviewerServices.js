@@ -30,6 +30,20 @@ export const fetchAllReviewer = async () => {
     }
 };
 
+// FETCH ONE REVIEWER
+export const fetchOneReviewer = async (reviewerId) => {
+    try {
+        const response = await axios.get(`${API_URL}/api/reviewer/fetch/${reviewerId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error on fetchOneReviewer:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to fetch reviewer'
+        };
+    }
+};
+
 // DELETE REVIEWER
 export const deleteReviewer = async (reviewerId) => {
     try {
@@ -40,6 +54,20 @@ export const deleteReviewer = async (reviewerId) => {
         return {
             success: false,
             message: error.response?.data?.message || 'Failed to delete reviewer'
+        };
+    }
+};
+
+// EDIT REVIEWER
+export const editReviewer = async (formData) => {
+    try {
+        const response = await axios.put(`${API_URL}/api/reviewer/edit/`, formData);
+        return response.data;
+    } catch (error) {
+        console.error('Error on editReviewer:', error);
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to edit reviewer'
         };
     }
 };

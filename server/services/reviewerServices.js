@@ -49,6 +49,25 @@ export const fetchAllReviewerService = async (userId) => {
     }
 };
 
+// FETCH ONE REVIEWER
+export const fetchOneReviewerService = async (reviewerId) => {
+    try {
+
+        const reviewer = await Reviewers.findOne({
+            attributes: ['id', 'reviewerName', 'content'],
+            where: { id: reviewerId }
+        })
+
+        if (!reviewer) return { success: false, message: 'Reviewer not found.' }
+
+        return { success: true, reviewer };
+
+    } catch (error) {
+        console.log('Error on fetchOneReviewerService:', error);
+        return { success: false, message: 'Error on fetchOneReviewerService' };
+    }
+};
+
 // DELETE REVIEWER
 export const deleteReviewerService = async (reviewerId) => {
     try {
@@ -76,5 +95,31 @@ export const deleteReviewerService = async (reviewerId) => {
             success: false,
             message: "Error on deleteReviewerService"
         };
+    }
+};
+
+// EDIT REVIEWER
+export const editReviewerService = async (reviewerId, reviewerName, content) => {
+    try {
+
+        if (!reviewerName || !reviewerName.trim()) {
+            return { success: false, message: "Please enter a reviewer name." };
+        }
+
+        const [updated] = await Reviewers.update(
+            {
+                reviewerName: reviewerName.trim(),
+                content: cleanHTML(content || "")
+            },
+            { where: { id: reviewerId } }
+        );
+
+        if (!updated) return { success: false, message: "Reviewer not found or unchanged." };
+
+        return { success: true, message: "Reviewer edited successfully" };
+
+    } catch (error) {
+        console.log('Error on editReviewerService:', error);
+        return { success: false, message: 'Error on editReviewerService' };
     }
 };
