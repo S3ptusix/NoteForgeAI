@@ -1,5 +1,6 @@
-import { FileText, GraduationCap, Layers, Sparkles } from "lucide-react";
-import { useState } from "react";
+/* eslint-disable no-unused-vars */
+import { EllipsisVertical, FileText, Gavel, GraduationCap, Layers, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { generateFlashcard, generateQuiz, generateReviewer } from "../services/generateServices";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
@@ -8,6 +9,9 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
 
     const [notes, setNotes] = useState('');
     const [loading, setloading] = useState(false);
+
+    const [showButton, setShowButton] = useState('flashcards');
+    const [openMenu, setOpenMenu] = useState(false);
 
     const handleGenerateFlashcard = async () => {
         try {
@@ -67,7 +71,7 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
     }
 
     return (
-        <div className="border border-gray-300 rounded-lg p-4">
+        <div className="relative border border-gray-300 rounded-lg p-4">
             <p className="flex gap-2 items-center font-semibold mb-4">
                 <Sparkles size={16} />
                 Generate Study Materials from Notes
@@ -77,31 +81,76 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
                 className="border border-gray-300 w-full p-4 rounded-lg h-75 mb-4 resize-none focus:outline-blue-700"
                 onChange={(e) => setNotes(e.target.value)}
             />
-            <div className="grid lg:grid-cols-3 gap-4">
+            <div className="flex gap-4">
+                {showButton === 'flashcards' &&
+                    <button
+                        disabled={loading || notes.trim() === ''}
+                        className="text-sm flex gap-2 items-center justify-center cursor-pointer bg-blue-600 text-white w-full rounded-sm disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
+                        onClick={handleGenerateFlashcard}
+                    >
+                        <Layers size={16} />
+                        Forge Flashcards
+                    </button>
+                }
+                {showButton === 'quizzes' &&
+                    <button
+                        disabled={loading || notes.trim() === ''}
+                        className="text-sm flex gap-2 items-center justify-center cursor-pointer bg-green-600 text-white w-full rounded-sm disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
+                        onClick={handleGenerateQuiz}
+                    >
+                        <GraduationCap size={16} />
+                        Forge Quiz
+                    </button>
+                }
+                {showButton === 'reviewers' &&
+                    <button
+                        disabled={loading || notes.trim() === ''}
+                        className="text-sm flex gap-2 items-center justify-center cursor-pointer bg-purple-600 text-white w-full rounded-sm disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
+                        onClick={handleGenerateReviewer}
+                    >
+                        <FileText size={16} />
+                        Forge Reviewer
+                    </button>
+                }
+
                 <button
-                    disabled={loading || notes.trim() === ''}
-                    className="flex gap-2 items-center justify-center cursor-pointer bg-blue-600 text-white w-full rounded-lg p-4 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
-                    onClick={handleGenerateFlashcard}
+                    className="btn btn-square btn-neutral shadow-none"
+                    onClick={() => setOpenMenu(prev => !prev)}
                 >
-                    <Layers size={16} />
-                    Generate Flashcards
+                    <EllipsisVertical />
                 </button>
-                <button
-                    disabled={loading || notes.trim() === ''}
-                    className="flex gap-2 items-center justify-center cursor-pointer bg-green-600 text-white w-full rounded-lg p-4 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
-                    onClick={handleGenerateQuiz}
-                >
-                    <GraduationCap size={16} />
-                    Generate Quiz
-                </button>
-                <button
-                    disabled={loading || notes.trim() === ''}
-                    className="flex gap-2 items-center justify-center cursor-pointer bg-purple-600 text-white w-full rounded-lg p-4 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
-                    onClick={handleGenerateReviewer}
-                >
-                    <FileText size={16} />
-                    Generate Reviewer
-                </button>
+                {openMenu &&
+                    <ul className="absolute bg-white shadow-md right-4 top-1/1 min-w-50 rounded-md z-10 overflow-hidden">
+                        <li
+                            className="flex gap-2 items-center p-4 hover:bg-gray-200 border-b border-gray-300 pointer-events-none"
+                        >
+                            <Gavel size={16} />
+                            Forge
+                        </li>
+                        <li
+                            className={`flex gap-2 items-center px-4 py-2 cursor-pointer duration-150 ${showButton === 'flashcards' ? 'bg-blue-600 text-white' : 'hover:bg-gray-200'}`}
+                            onClick={() => setShowButton('flashcards')}
+                        >
+                            <Layers size={16} />
+                            Decks
+
+                        </li>
+                        <li
+                            className={`flex gap-2 items-center px-4 py-2 cursor-pointer duration-150 ${showButton === 'quizzes' ? 'bg-green-600 text-white' : 'hover:bg-gray-200'}`}
+                            onClick={() => setShowButton('quizzes')}
+                        >
+                            <GraduationCap size={16} />
+                            Quizzes
+                        </li>
+                        <li
+                            className={`flex gap-2 items-center px-4 py-2 cursor-pointer duration-150 ${showButton === 'reviewers' ? 'bg-purple-600 text-white' : 'hover:bg-gray-200'}`}
+                            onClick={() => setShowButton('reviewers')}
+                        >
+                            <FileText size={16} />
+                            Reviewers
+                        </li>
+                    </ul>
+                }
             </div>
             {loading && <Loading />}
         </div>
