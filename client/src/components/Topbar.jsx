@@ -51,7 +51,7 @@ export default function Topbar() {
                             <p className="max-md:hidden">{user.fullname}</p>
                         </button>
                         {openUserMenu && (
-                            <div className="min-w-50 absolute top-[calc(100%+.5rem)] right-0 bg-white border border-gray-300 rounded-lg overflow-hidden shadow-md">
+                            <div className="min-w-50 absolute top-[calc(100%+.5rem)] right-0 bg-white border border-gray-300 rounded-lg overflow-hidden shadow-md z-10">
                                 <div className="p-2 text-sm">
                                     <p className="text-gray-700">Signed in as</p>
                                     <p>{user.username}</p>

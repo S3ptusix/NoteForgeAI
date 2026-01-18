@@ -40,25 +40,6 @@ export default function Home() {
                     <GenerateMaterial runFunction={loadAllDeck} />
                 </section>
 
-                {/* <section className="mb-8">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="font-semibold">My Decks</p>
-
-                        <button
-                            className="btn bg-blue-600 text-white"
-                            onClick={() => setOpenAddDeck(true)}
-                        >
-                            <Plus size={16} />
-                            New Deck
-                        </button>
-                    </div>
-
-                    <Decks
-                        decks={data}
-                        loadAllDeck={loadAllDeck}
-                    />
-                </section> */}
-
                 <section className="">
                     <p className="text-center mb-8 font-semibold text-lg">Study Materials</p>
                     <div className="grid lg:grid-cols-3 gap-4">
