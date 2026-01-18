@@ -1,4 +1,4 @@
-import { generateFlashcardService, generateQuizService } from "../services/generateServices.js";
+import { generateFlashcardService, generateQuizService, generateReviewerService } from "../services/generateServices.js";
 
 // GENERATE FLASHCARD
 export const generateFlashcardController = async (req, res) => {
@@ -22,6 +22,19 @@ export const generateQuizController = async (req, res) => {
         return res.json(result);
     } catch (error) {
         console.error("Error on generateQuizController:", error);
+        return res.json({ success: false, message: "Server error" });
+    }
+};
+
+// GENERATE REVIEWER
+export const generateReviewerController = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { notes } = req.body;
+        const result = await generateReviewerService(userId, notes);
+        return res.json(result);
+    } catch (error) {
+        console.error("Error on generateReviewerController:", error);
         return res.json({ success: false, message: "Server error" });
     }
 };

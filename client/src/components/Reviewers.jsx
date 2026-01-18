@@ -1,4 +1,4 @@
-import { Eye, Pen, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import DeleteReviewer from "./DeleteReviewer";
 import EditReviewer from "./EditReviewer";
@@ -41,18 +41,10 @@ export default function Reviewers({ reviewers, loadAllReviewer }) {
 
                     <div className="flex gap-2">
                         <button
-                            className="btn grow bg-violet-600 text-white"
-                        // onClick={() => navigate(`/app/takeQuiz/${quiz.id}`)}
-                        >
-                            <Eye size={16} />
-                            View
-                        </button>
-
-                        <button
-                            className="btn btn-square bg-blue-600 text-white"
+                            className="grow btn btn-square bg-violet-600 text-white"
                             onClick={() => handleEdit(reviewer.id)}
                         >
-                            <Pen size={16} />
+                            View / Edit
                         </button>
 
                         <button

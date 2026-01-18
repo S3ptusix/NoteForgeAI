@@ -1,6 +1,6 @@
 import { FileText, GraduationCap, Layers, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { generateFlashcard, generateQuiz } from "../services/generateServices";
+import { generateFlashcard, generateQuiz, generateReviewer } from "../services/generateServices";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
 
@@ -9,7 +9,7 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
     const [notes, setNotes] = useState('');
     const [loading, setloading] = useState(false);
 
-    const handleSubmitFlashcard = async () => {
+    const handleGenerateFlashcard = async () => {
         try {
             setloading(true);
             const { success, message } = await generateFlashcard({ notes: notes });
@@ -22,13 +22,13 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
             };
             return toast.error(message);
         } catch (error) {
-            console.error('Error on handleSubmitFlashcard:', error);
+            console.error('Error on handleGenerateFlashcard:', error);
         } finally {
             setloading(false);
         }
     }
 
-    const handleSubmitQuiz = async () => {
+    const handleGenerateQuiz = async () => {
         try {
             setloading(true);
             const { success, message } = await generateQuiz({ notes: notes });
@@ -41,7 +41,26 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
             };
             return toast.error(message);
         } catch (error) {
-            console.error('Error on handleSubmitQuiz:', error);
+            console.error('Error on handleGenerateQuiz:', error);
+        } finally {
+            setloading(false);
+        }
+    }
+
+    const handleGenerateReviewer = async () => {
+        try {
+            setloading(true);
+            const { success, message } = await generateReviewer({ notes: notes });
+            if (success) {
+                runFunction();
+                toast.success(message);
+                setNotes('');
+                return
+
+            };
+            return toast.error(message);
+        } catch (error) {
+            console.error('Error on handleGenerateReviewer:', error);
         } finally {
             setloading(false);
         }
@@ -62,7 +81,7 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
                 <button
                     disabled={loading || notes.trim() === ''}
                     className="flex gap-2 items-center justify-center cursor-pointer bg-blue-600 text-white w-full rounded-lg p-4 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
-                    onClick={handleSubmitFlashcard}
+                    onClick={handleGenerateFlashcard}
                 >
                     <Layers size={16} />
                     Generate Flashcards
@@ -70,7 +89,7 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
                 <button
                     disabled={loading || notes.trim() === ''}
                     className="flex gap-2 items-center justify-center cursor-pointer bg-green-600 text-white w-full rounded-lg p-4 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
-                    onClick={handleSubmitQuiz}
+                    onClick={handleGenerateQuiz}
                 >
                     <GraduationCap size={16} />
                     Generate Quiz
@@ -78,6 +97,7 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
                 <button
                     disabled={loading || notes.trim() === ''}
                     className="flex gap-2 items-center justify-center cursor-pointer bg-purple-600 text-white w-full rounded-lg p-4 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 duration-150"
+                    onClick={handleGenerateReviewer}
                 >
                     <FileText size={16} />
                     Generate Reviewer
