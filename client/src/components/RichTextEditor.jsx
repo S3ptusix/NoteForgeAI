@@ -17,6 +17,7 @@ import {
     Redo,
     Highlighter
 } from "lucide-react";
+import { useEffect } from "react";
 
 // Toolbar button component
 const ToolbarButton = ({ onClick, children }) => (
@@ -44,10 +45,17 @@ export default function RichTextEditor({ content = '', setContent }) {
         },
     });
 
+    // 👇 ADD THIS BLOCK
+    useEffect(() => {
+        if (editor && content !== editor.getHTML()) {
+            editor.commands.setContent(content || "");
+        }
+    }, [content, editor]);
+
     if (!editor) return null;
 
     return (
-        <div className="w-full">
+        <div className="w-full h-full flex flex-col">
             {/* Toolbar */}
             <div className="flex flex-wrap">
 
@@ -110,7 +118,7 @@ export default function RichTextEditor({ content = '', setContent }) {
             {/* Editor */}
             <EditorContent
                 editor={editor}
-                className="EditorContent border border-gray-300 w-full p-4 rounded-md h-100 mb-4 resize-none outline-blue-700 overflow-auto"
+                className="EditorContent grow border border-gray-300 w-full p-4 rounded-md resize-none outline-blue-700 overflow-auto"
             />
         </div>
     );

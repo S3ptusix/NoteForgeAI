@@ -43,11 +43,9 @@ export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
         }
     }, []);
 
-    if (!reviewerId || !reviewerName || !content) return;
-
     return (
         <div className="modal-style">
-            <div className="wide-modal">
+            <div className="wide-modal flex flex-col">
                 <div className="modal-title">
                     <p className="font-semibold">Edit Reviewer</p>
                     <button
@@ -61,13 +59,13 @@ export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
                 <input
                     type="text"
                     placeholder="Enter reviewer name"
-                    className="input w-full mb-4"
+                    className="input w-full mb-4 py-2"
                     value={reviewerName}
                     onChange={(e) => setReviewerName(e.target.value)}
                 />
 
                 <p className="font-semibold mb-1 text-gray-700 text-sm">Content</p>
-                <div className="mb-4">
+                <div className="grow mb-4">
                     <RichTextEditor
                         content={content}
                         setContent={(html) =>

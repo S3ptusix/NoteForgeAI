@@ -1,7 +1,8 @@
-import { Decks, Cards, Users, Quizzes, Questions } from "../models/fk.js";
+import { Decks, Cards, Users, Quizzes, Questions, Reviewers } from "../models/fk.js";
 import { generateFlashcard } from '../gemini/flashcard.js'
 import { isValidFlashcard, validateQuestions } from "../utils/validate.js";
 import { generateQuiz } from "../gemini/quiz.js";
+import { generateReviewer } from "../gemini/Reviewer.js";
 
 // GENERATE FLASHCARD
 export const generateFlashcardService = async (userId, notes) => {
@@ -102,5 +103,38 @@ export const generateQuizService = async (userId, notes) => {
         console.error("Error on generateQuizService:", error);
 
         return { success: false, message: "Error while generating quiz." };
+    }
+};
+
+// GENERATE REVIEWER
+export const generateReviewerService = async (userId, notes) => {
+    try {
+
+        const user = await Users.findOne({ where: { id: userId } });
+
+        if (!user) {
+            return { success: false, message: "User not found." };
+        }
+
+        if (!notes?.trim()) {
+            return { success: false, message: "Please enter a note." };
+        }
+
+        const generatedReviewer = await generateReviewer(notes);
+
+        await Reviewers.create({ userId, reviewerName: generatedReviewer.reviewerName, content: generatedReviewer.content });
+
+        return {
+            success: true,
+            message: "Reviewer generated successfully."
+        };
+
+    } catch (error) {
+        console.log("Error on generateReviewerService:", error);
+
+        return {
+            success: false,
+            message: "Error while generating reviewer."
+        };
     }
 };

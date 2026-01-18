@@ -27,7 +27,7 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
 
     return (
         <div className="modal-style">
-            <div className="wide-modal">
+            <div className="wide-modal flex flex-col">
                 <div className="modal-title">
                     <p className="font-semibold">Create Reviewer</p>
                     <button
@@ -41,7 +41,7 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
                 <input
                     type="text"
                     placeholder="Enter reviewer name"
-                    className="input w-full mb-4"
+                    className="input w-full mb-4 py-2"
                     onChange={(e) => setReviewerName(e.target.value)}
                 />
 
@@ -51,7 +51,7 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
                     className="border border-gray-300 w-full p-4 rounded-md h-100 mb-4 resize-none focus:outline-blue-700"
                     onChange={(e) => setContent(e.target.value)}
                 /> */}
-                <div className="mb-4">
+                <div className="grow mb-4">
                     <RichTextEditor
                         setContent={(html) =>
                             setContent(cleanHTML(html))
@@ -70,7 +70,7 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
                         className="btn border-gray-300"
                         onClick={onClose}
                     >
-                        Cancel
+                        Cancel 
                     </button>
                 </div>
             </div>
