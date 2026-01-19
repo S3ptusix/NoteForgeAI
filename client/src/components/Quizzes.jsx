@@ -2,7 +2,7 @@ import { CirclePlay, Pen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DeleteQuiz from "./DeleteQuiz";
-import EditQuiz from "./editQuiz";
+import EditQuiz from "./EditQuiz";
 
 export default function Quizzes({ quizzes, loadAllQuiz }) {
 
