@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { EllipsisVertical, FileText, Gavel, GraduationCap, Layers, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { generateFlashcard, generateQuiz, generateReviewer } from "../services/generateServices";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
