@@ -1,16 +1,13 @@
 {
   "name": "noteforgeai",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
+    "start": "node server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "npm run server --prefix server",
     "client": "npm run dev --prefix client"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "concurrently": "^9.2.1"
   }
