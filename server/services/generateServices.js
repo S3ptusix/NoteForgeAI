@@ -2,7 +2,7 @@ import { Decks, Cards, Users, Quizzes, Questions, Reviewers } from "../models/fk
 import { generateFlashcard } from '../gemini/flashcard.js'
 import { isValidFlashcard, validateQuestions } from "../utils/validate.js";
 import { generateQuiz } from "../gemini/quiz.js";
-import { generateReviewer } from "../gemini/Reviewer.js";
+import { generateReviewer } from "../gemini/reviewer.js";
 
 // GENERATE FLASHCARD
 export const generateFlashcardService = async (userId, notes) => {
