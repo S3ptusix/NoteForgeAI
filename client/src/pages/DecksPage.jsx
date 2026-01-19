@@ -6,7 +6,7 @@ import { fetchAllDeck } from "../services/deckServices";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Decks from "../components/Decks";
-import AddDeck from "../components/addDeck";
+import AddDeck from "../components/AddDeck";
 
 export default function DecksPage() {
 

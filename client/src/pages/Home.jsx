@@ -2,13 +2,13 @@
 import { FileText, GraduationCap, Layers, Plus } from "lucide-react";
 import Topbar from "../components/Topbar";
 import GenerateMaterial from "../components/GenerateMaterial";
-import AddDeck from "../components/addDeck";
-import { useState } from "react";
 import Decks from "../components/Decks";
+import { useState } from "react";
 import { useEffect } from "react";
 import { fetchAllDeck } from "../services/deckServices";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import AddDeck from "../components/AddDeck";
 
 export default function Home() {
 
