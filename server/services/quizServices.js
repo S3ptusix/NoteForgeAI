@@ -65,7 +65,8 @@ export const fetchAllQuizService = async (userId) => {
                     'optionD',
                     'answer'
                 ]
-            }
+            },
+            where: { userId }
         });
 
         return { success: true, quizzes }
