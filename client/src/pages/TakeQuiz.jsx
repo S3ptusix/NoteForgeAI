@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { fetchOneQuiz } from "../services/quizServices.";
 import { toast } from "react-toastify";
+import Loading from "../components/Loading";
 
 export default function TakeQuiz() {
 
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
 
     const { quizId } = useParams();
 
@@ -44,6 +47,7 @@ export default function TakeQuiz() {
 
     useEffect(() => {
         try {
+            setLoading(true);
             const loadQuiz = async () => {
                 const { success, message, quiz } = await fetchOneQuiz(quizId);
                 if (success) return setQuiz(quiz);
@@ -52,8 +56,12 @@ export default function TakeQuiz() {
             loadQuiz();
         } catch (error) {
             console.error('Error on loadQuiz:', error);
+        } finally {
+            setLoading(false);
         }
     }, [])
+
+    if (loading) return <Loading />;
 
     if (showScore) {
         return (

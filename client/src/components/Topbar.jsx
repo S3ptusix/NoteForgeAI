@@ -7,6 +7,7 @@ import { UserContext } from "../context/AuthProvider";
 import { logoutUser } from "../services/authServices";
 import { toast } from "react-toastify";
 import EditProfile from "./EditProfile";
+import Loading from "./Loading";
 
 export default function Topbar() {
 
@@ -15,9 +16,11 @@ export default function Topbar() {
     const [modal, setModal] = useState(null); // "login" | "register" | null
     const [openUserMenu, setOpenUserMenu] = useState(false);
     const [openEditProfile, setOpenEditProfile] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleLogout = async () => {
         try {
+            setLoading(true);
             const { success, message } = await logoutUser();
             if (success) {
                 setUser(null);
@@ -27,8 +30,12 @@ export default function Topbar() {
             }
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setLoading(false);
         }
     }
+
+    if (loading) return <Loading />;
 
     return (
         <div

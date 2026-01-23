@@ -3,14 +3,17 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { editCard, fetchOneCard } from "../services/cardServices";
 import { fixSpaces } from "../utils/format";
+import Loading from "./Loading";
 
 export default function EditCard({ cardId, onClose, runFunction = () => { } }) {
 
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
         try {
+            setLoading(true);
             const formatedQuestion = fixSpaces(question);
             const formatedAnswer = fixSpaces(answer);
             const { success, message } = await editCard({ cardId, question: formatedQuestion, answer: formatedAnswer });
@@ -22,6 +25,8 @@ export default function EditCard({ cardId, onClose, runFunction = () => { } }) {
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -40,6 +45,8 @@ export default function EditCard({ cardId, onClose, runFunction = () => { } }) {
         }
         loadValues();
     }, [cardId]);
+
+    if (loading) return <Loading />;
 
     return (
         <div className="modal-style">

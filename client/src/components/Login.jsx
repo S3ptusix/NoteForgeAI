@@ -5,10 +5,13 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { loadUser } from "../services/authServices";
 import { UserContext } from "../context/AuthProvider";
+import Loading from "./Loading";
 
 export default function Login({ onClose, switchModal = () => { } }) {
 
     const { setUser } = useContext(UserContext);
+
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -29,7 +32,7 @@ export default function Login({ onClose, switchModal = () => { } }) {
         if (name === "password") {
             e.target.value = value.replace(/\s+/g, '');
         }
-        
+
         setUserInput(prev => ({
             ...prev,
             [name]: value
@@ -38,6 +41,7 @@ export default function Login({ onClose, switchModal = () => { } }) {
 
     const handleSubmit = async () => {
         try {
+            setLoading(true);
             const { success, message } = await handleLogin(userInput);
             if (success) {
                 onClose();
@@ -49,8 +53,12 @@ export default function Login({ onClose, switchModal = () => { } }) {
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setLoading(false);
         }
     }
+
+    if (loading) return <Loading />;
 
     return (
         <div className="modal-style">

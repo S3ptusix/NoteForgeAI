@@ -7,19 +7,24 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Decks from "../components/Decks";
 import AddDeck from "../components/AddDeck";
+import Loading from "../components/Loading";
 
 export default function DecksPage() {
 
     const [openAddDeck, setOpenAddDeck] = useState(false);
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const loadAllDeck = async () => {
         try {
+            setLoading(true);
             const { success, message, decks } = await fetchAllDeck();
             if (success) return setData(decks);
             toast.error(message);
         } catch (error) {
             console.error('Error on loadAllDeck:', error)
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -28,6 +33,8 @@ export default function DecksPage() {
             loadAllDeck();
         });
     }, []);
+
+    if (loading) return <Loading />;
 
     return (
         <div className="min-h-screen flex flex-col">

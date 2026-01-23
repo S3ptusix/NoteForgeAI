@@ -6,20 +6,25 @@ import AddReviewer from "../components/AddReviewer";
 import { fetchAllReviewer } from "../services/ReviewerServices";
 import { toast } from "react-toastify";
 import Reviewers from "../components/Reviewers";
+import Loading from "../components/Loading";
 
 export default function ReviewersPage() {
 
     const [openAddReviewer, setOpenAddReviewer] = useState(false);
 
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const loadAllReviewer = async () => {
         try {
+            setLoading(true);
             const { success, message, reviewers } = await fetchAllReviewer();
             if (success) return setData(reviewers);
             return toast.error(message);
         } catch (error) {
             console.error('Error on loadAllReviewer:', error);
+        }finally{
+            setLoading(false);
         }
     }
 
@@ -28,6 +33,8 @@ export default function ReviewersPage() {
             loadAllReviewer();
         });
     }, []);
+
+    if (loading) return <Loading />;
 
     return (
         <div className="min-h-screen flex flex-col">

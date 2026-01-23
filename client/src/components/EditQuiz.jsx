@@ -4,9 +4,11 @@ import Question from "./Question";
 import { useEffect, useState } from "react";
 import { editQuiz, fetchOneQuiz } from "../services/quizServices.";
 import { toast } from 'react-toastify';
+import Loading from "./Loading";
 
 export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
 
+    const [loading, setLoading] = useState(false);
     const [quizName, setQuizName] = useState('');
     const [questions, setQuestions] = useState([
         {
@@ -37,6 +39,7 @@ export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
 
     const handleSubmit = async () => {
         try {
+            setLoading(true);
             const { success, message } = await editQuiz({ quizId, quizName, questions });
             if (success) {
                 loadAllQuiz();
@@ -46,6 +49,8 @@ export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
             return toast.error(message);
         } catch (error) {
             console.log('Error on handleSubmit:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -65,6 +70,8 @@ export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
             console.error('Error on loadQuiz:', error);
         }
     }, []);
+
+    if (loading) return <Loading />;
 
     return (
         <div className="modal-style">

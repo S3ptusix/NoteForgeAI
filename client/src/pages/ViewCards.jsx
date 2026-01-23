@@ -7,6 +7,7 @@ import AddCard from "../components/AddCard";
 import { fetchAllCard } from "../services/cardServices";
 import { toast } from "react-toastify";
 import Cards from "../components/Cards";
+import Loading from "../components/Loading";
 
 export default function ViewCards() {
 
@@ -17,9 +18,11 @@ export default function ViewCards() {
 
     const [data, setData] = useState([]);
     const [name, setName] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const loadAllCard = async () => {
         try {
+            setLoading(true);
             const { success, message, deckName, cards } = await fetchAllCard(deckId);
             if (success) {
                 setName(deckName);
@@ -29,6 +32,8 @@ export default function ViewCards() {
             toast.error(message);
         } catch (error) {
             console.error('Error on loadAllCard:', error)
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -37,6 +42,8 @@ export default function ViewCards() {
             loadAllCard();
         });
     }, [deckId]);
+
+    if (loading) return <Loading />;
 
     return (
         <div className="min-h-screen flex flex-col">
