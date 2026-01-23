@@ -34,8 +34,6 @@ export default function DecksPage() {
         });
     }, []);
 
-    if (loading) return <Loading />;
-
     return (
         <div className="min-h-screen flex flex-col">
             <Topbar />
@@ -71,6 +69,7 @@ export default function DecksPage() {
                     loadAllDeck={loadAllDeck}
                 />
             }
+            {loading && <Loading />}
         </div>
     )
 }

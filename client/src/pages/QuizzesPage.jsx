@@ -33,8 +33,6 @@ export default function QuizzesPage() {
         });
     }, []);
 
-    if (loading) return <Loading />;
-
     return (
         <div className="min-h-screen flex flex-col">
             <Topbar />
@@ -70,6 +68,7 @@ export default function QuizzesPage() {
                     loadAllQuiz={loadAllQuiz}
                 />
             }
+            {loading && <Loading />}
         </div>
     )
 }
