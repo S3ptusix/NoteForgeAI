@@ -5,11 +5,13 @@ import RichTextEditor from "./RichTextEditor";
 import { X } from "lucide-react";
 import { editReviewer, fetchOneReviewer } from "../services/ReviewerServices";
 import { toast } from "react-toastify";
+import Loading from "./Loading";
 
 export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
 
     const [reviewerName, setReviewerName] = useState('');
     const [content, setContent] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
         try {
@@ -28,6 +30,7 @@ export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
 
     useEffect(() => {
         try {
+            setLoading(true);
             const loadReviewer = async () => {
                 const { success, message, reviewer } = await fetchOneReviewer(reviewerId);
                 if (success) {
@@ -40,8 +43,12 @@ export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
             loadReviewer();
         } catch (error) {
             console.error('Error on LoadReviewer:', error);
+        } finally {
+            setLoading(false);
         }
     }, []);
+
+    if (loading) return <Loading />;
 
     return (
         <div className="modal-style">

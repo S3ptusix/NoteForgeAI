@@ -6,19 +6,24 @@ import AddQuiz from "../components/AddQuiz";
 import Quizzes from "../components/Quizzes";
 import { fetchAllQuiz } from "../services/quizServices.";
 import { toast } from "react-toastify";
+import Loading from "../components/Loading";
 
 export default function QuizzesPage() {
 
     const [openAddQuiz, setOpenAddQuiz] = useState(false);
     const [data, setData] = useState([]);
+    const [loading, setloading] = useState(false);
 
     const loadAllQuiz = async () => {
         try {
+            setloading(true);
             const { success, message, quizzes } = await fetchAllQuiz();
             if (success) return setData(quizzes);
             toast.error(message);
         } catch (error) {
             console.error('Error on loadAllDeck:', error)
+        } finally {
+            setloading(false);
         }
     }
 
@@ -27,6 +32,8 @@ export default function QuizzesPage() {
             loadAllQuiz();
         });
     }, []);
+
+    if (loading) return <Loading />;
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -52,8 +59,8 @@ export default function QuizzesPage() {
                     </div>
 
                     <Quizzes
-                    quizzes={data}
-                    loadAllQuiz={loadAllQuiz}
+                        quizzes={data}
+                        loadAllQuiz={loadAllQuiz}
                     />
                 </section>
             </div>

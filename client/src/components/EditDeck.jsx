@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { fixSpaces } from "../utils/format";
 import { editDeck, fetchOneDeck } from "../services/deckServices";
+import Loading from "./Loading";
 
 export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
 
     const [deckName, setDeckName] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
         try {
+            setLoading(true);
             const formatedName = fixSpaces(deckName);
             const { success, message } = await editDeck({ deckId, deckName: formatedName });
             if (success) {
@@ -20,6 +23,8 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -34,7 +39,9 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
             }
         }
         loadValues();
-    }, [deckId])
+    }, [deckId]);
+
+    if (loading) return <Loading />
 
     return (
         <div className="modal-style">

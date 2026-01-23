@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchAllCard } from "../services/cardServices";
 import { toast } from "react-toastify";
+import Loading from "../components/Loading";
 
 export default function StudyMode() {
 
     const { deckId } = useParams();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const [data, setData] = useState([]);
     const [name, setName] = useState('');
@@ -32,6 +34,7 @@ export default function StudyMode() {
     useEffect(() => {
         const loadAllCard = async () => {
             try {
+                setLoading(true);
                 const { success, message, deckName, cards } = await fetchAllCard(deckId);
                 if (success) {
                     setName(deckName);
@@ -41,6 +44,8 @@ export default function StudyMode() {
                 toast.error(message);
             } catch (error) {
                 console.error('Error on loadAllCard:', error)
+            } finally {
+                setLoading(false);
             }
         }
         loadAllCard();
@@ -68,6 +73,7 @@ export default function StudyMode() {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [page, data.length]);
 
+    if (loading) return <Loading />;
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -95,7 +101,7 @@ export default function StudyMode() {
                 </div>
             </div>
             <div>
-                
+
             </div>
             <div className="flex-center grow my-4 mx-[10vw]">
                 <div
