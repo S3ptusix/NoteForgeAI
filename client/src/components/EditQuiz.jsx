@@ -9,6 +9,7 @@ import Loading from "./Loading";
 export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
 
     const [loading, setLoading] = useState(false);
+    const [submiting, setSubmiting] = useState(false);
     const [quizName, setQuizName] = useState('');
     const [questions, setQuestions] = useState([
         {
@@ -39,7 +40,7 @@ export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
 
     const handleSubmit = async () => {
         try {
-            setLoading(true);
+            setSubmiting(true);
             const { success, message } = await editQuiz({ quizId, quizName, questions });
             if (success) {
                 loadAllQuiz();
@@ -50,12 +51,13 @@ export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
         } catch (error) {
             console.log('Error on handleSubmit:', error);
         } finally {
-            setLoading(false);
+            setSubmiting(false);
         }
     }
 
     useEffect(() => {
         try {
+            setLoading(true);
             const loadQuiz = async () => {
                 const { success, message, quiz } = await fetchOneQuiz(quizId);
                 if (success) {
@@ -68,6 +70,8 @@ export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
             loadQuiz();
         } catch (error) {
             console.error('Error on loadQuiz:', error);
+        } finally {
+            setLoading(false);
         }
     }, []);
 
@@ -114,10 +118,11 @@ export default function EditQuiz({ quizId, onClose, loadAllQuiz }) {
 
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Update Quiz
+                        {submiting ? 'Updating...' : 'Update Quiz'}
                     </button>
                     <button
                         className="btn border-gray-300"

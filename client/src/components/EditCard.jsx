@@ -10,10 +10,11 @@ export default function EditCard({ cardId, onClose, runFunction = () => { } }) {
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [loading, setLoading] = useState(false);
+    const [submiting, setSubmiting] = useState(false);
 
     const handleSubmit = async () => {
         try {
-            setLoading(true);
+            setSubmiting(true);
             const formatedQuestion = fixSpaces(question);
             const formatedAnswer = fixSpaces(answer);
             const { success, message } = await editCard({ cardId, question: formatedQuestion, answer: formatedAnswer });
@@ -26,13 +27,14 @@ export default function EditCard({ cardId, onClose, runFunction = () => { } }) {
         } catch (error) {
             console.error('Error on handleSubmit:', error);
         } finally {
-            setLoading(false);
+            setSubmiting(false);
         }
     }
 
     useEffect(() => {
         const loadValues = async () => {
             try {
+                setLoading(true);
                 const { success, message, card } = await fetchOneCard(cardId);
                 if (success) {
                     setQuestion(card.question);
@@ -41,6 +43,8 @@ export default function EditCard({ cardId, onClose, runFunction = () => { } }) {
                 return toast.error(message, { toastId: "error-loadCard" });
             } catch (error) {
                 console.log('Error on loadValues:', error);
+            } finally {
+                setLoading(false);
             }
         }
         loadValues();
@@ -79,10 +83,11 @@ export default function EditCard({ cardId, onClose, runFunction = () => { } }) {
 
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Save Card
+                        {submiting ? 'Saving...' : 'Save Card'}
                     </button>
                     <button
                         className="btn border-gray-300"

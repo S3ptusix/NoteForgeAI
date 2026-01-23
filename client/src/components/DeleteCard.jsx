@@ -1,12 +1,15 @@
 import { TriangleAlert } from "lucide-react";
 import { toast } from "react-toastify";
 import { deleteCard } from "../services/cardServices";
+import { useState } from "react";
 
 export default function DeleteCard({ cardId, onClose, runFunction = () => { } }) {
 
+    const [submiting, setSubmiting] = useState(false);
+
     const handleSubmit = async () => {
         try {
-
+            setSubmiting(true);
             const { success, message } = await deleteCard(cardId);
             if (success) {
                 runFunction();
@@ -16,6 +19,8 @@ export default function DeleteCard({ cardId, onClose, runFunction = () => { } })
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -39,10 +44,11 @@ export default function DeleteCard({ cardId, onClose, runFunction = () => { } })
                         Cancel
                     </button>
                     <button
-                        className="btn bg-red-600 text-white"
+                        disabled={submiting}
+                        className="btn not-disabled:bg-red-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Delete
+                        {submiting ? 'Deleting...' : 'Delete'}
                     </button>
                 </div>
             </div>
