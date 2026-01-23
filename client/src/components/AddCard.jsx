@@ -8,9 +8,11 @@ export default function AddCard({ deckId, onClose, runFunction = () => { } }) {
 
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
+    const [submiting, setSubmiting] = useState(false);
 
     const handleSubmit = async () => {
         try {
+            setSubmiting(true);
             const formatedName = fixSpaces(question);
             const formatedAnswer = fixSpaces(answer);
             const { success, message } = await addCard({ deckId, question: formatedName, answer: formatedAnswer });
@@ -23,6 +25,8 @@ export default function AddCard({ deckId, onClose, runFunction = () => { } }) {
             return toast.error(message, { toastId: "error-addCard" });
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -55,10 +59,11 @@ export default function AddCard({ deckId, onClose, runFunction = () => { } }) {
 
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Save Card
+                        {submiting ? 'Saving...' : 'Save Card'}
                     </button>
                     <button
                         className="btn border-gray-300"

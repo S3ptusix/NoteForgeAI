@@ -8,6 +8,8 @@ export default function EditProfile({ onClose }) {
 
     const { user } = useContext(UserContext);
 
+    const [submiting, setSubmiting] = useState(false);
+
     const [viewPassword, setViewPassword] = useState({
         new: false,
         current: false,
@@ -39,6 +41,7 @@ export default function EditProfile({ onClose }) {
 
     const handleSubmit = async () => {
         try {
+            setSubmiting(true);
             const { success, message } = await editProfile(userInput);
             if (success) {
                 return window.location.reload();
@@ -46,6 +49,8 @@ export default function EditProfile({ onClose }) {
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -125,10 +130,11 @@ export default function EditProfile({ onClose }) {
                         Cancel
                     </button>
                     <button
-                        className="btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Save Changes
+                        {submiting ? 'Saving...' : 'Save Changes'}
                     </button>
                 </div>
             </div>

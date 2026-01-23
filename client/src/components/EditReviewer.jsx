@@ -12,19 +12,22 @@ export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
     const [reviewerName, setReviewerName] = useState('');
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(false);
+    const [submiting, setSubmiting] = useState(false);
 
     const handleSubmit = async () => {
         try {
+            setSubmiting(true);
             const { success, message } = await editReviewer({ reviewerId, reviewerName, content });
             if (success) {
                 toast.success(message);
                 loadAllReviewer();
-                onClose();
                 return;
             }
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -83,10 +86,11 @@ export default function EditReviewer({ reviewerId, onClose, loadAllReviewer }) {
 
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Update reviewer
+                        {submiting ? 'Updating...' : 'Update reviewer'}
                     </button>
                     <button
                         className="btn border-gray-300"

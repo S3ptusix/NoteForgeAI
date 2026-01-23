@@ -7,9 +7,11 @@ import { fixSpaces } from "../utils/format";
 export default function AddDeck({ onClose, loadAllDeck }) {
 
     const [deckName, setDeckName] = useState('');
+    const [submiting, setSubmiting] = useState(false);
 
     const handleSubmit = async () => {
         try {
+            setSubmiting(true);
             const formatedName = fixSpaces(deckName);
             const { success, message } = await addDeck({ deckName: formatedName });
             if (success) {
@@ -21,6 +23,8 @@ export default function AddDeck({ onClose, loadAllDeck }) {
             return toast.error(message, { toastId: "error-addDeck" });
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -45,10 +49,11 @@ export default function AddDeck({ onClose, loadAllDeck }) {
                 />
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Create Deck
+                        {submiting ? 'Creating...' : 'Create Deck'}
                     </button>
                     <button
                         className="btn border-gray-300"

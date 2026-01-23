@@ -1,12 +1,16 @@
 import { TriangleAlert } from "lucide-react";
 import { deleteDeck } from "../services/deckServices";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 export default function DeleteDeck({ deckId, onClose, loadAllDeck }) {
 
+
+    const [submiting, setSubmiting] = useState(false);
+
     const handleSubmit = async () => {
         try {
-
+            setSubmiting(true);
             const { success, message } = await deleteDeck(deckId);
             if (success) {
                 loadAllDeck();
@@ -17,6 +21,8 @@ export default function DeleteDeck({ deckId, onClose, loadAllDeck }) {
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -40,10 +46,11 @@ export default function DeleteDeck({ deckId, onClose, loadAllDeck }) {
                         Cancel
                     </button>
                     <button
-                        className="btn bg-red-600 text-white"
+                        disabled={submiting}
+                        className="btn not-disabled:bg-red-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Delete
+                        {submiting ? 'Deleting...' : 'Delete'}
                     </button>
                 </div>
             </div>

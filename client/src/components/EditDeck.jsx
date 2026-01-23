@@ -9,10 +9,11 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
 
     const [deckName, setDeckName] = useState('');
     const [loading, setLoading] = useState(false);
+    const [submiting, setSubmiting] = useState(false);
 
     const handleSubmit = async () => {
         try {
-            setLoading(true);
+            setSubmiting(true);
             const formatedName = fixSpaces(deckName);
             const { success, message } = await editDeck({ deckId, deckName: formatedName });
             if (success) {
@@ -24,18 +25,21 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
         } catch (error) {
             console.error('Error on handleSubmit:', error);
         } finally {
-            setLoading(false);
+            setSubmiting(false);
         }
     }
 
     useEffect(() => {
         const loadValues = async () => {
             try {
+                setLoading(true);
                 const { success, message, deck } = await fetchOneDeck(deckId);
                 if (success) return setDeckName(deck.deckName);
                 return toast.error(message, { toastId: "error-loadDeck" });
             } catch (error) {
                 console.error('Error on loadValues:', error);
+            } finally {
+                setLoading(false);
             }
         }
         loadValues();
@@ -65,10 +69,11 @@ export default function EditDeck({ deckId, onClose, runFunction = () => { } }) {
                 />
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Save Changes
+                        {submiting ? 'Saving...' : 'Save Changes'}
                     </button>
                     <button
                         className="btn border-gray-300"

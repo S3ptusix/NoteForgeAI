@@ -7,11 +7,13 @@ import { toast } from "react-toastify";
 
 export default function AddReviewer({ onClose, loadAllReviewer }) {
 
+    const [submiting, setSubmiting] = useState(false);
     const [reviewerName, setReviewerName] = useState('');
     const [content, setContent] = useState('');
 
     const handleSubmit = async () => {
         try {
+            setSubmiting(true);
             const { success, message } = await addReviewer({ reviewerName, content });
             if (success) {
                 toast.success(message);
@@ -22,6 +24,8 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -61,16 +65,17 @@ export default function AddReviewer({ onClose, loadAllReviewer }) {
 
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Create reviewer
+                        {submiting ? 'Creating...' : 'Create reviewer'}
                     </button>
                     <button
                         className="btn border-gray-300"
                         onClick={onClose}
                     >
-                        Cancel 
+                        Cancel
                     </button>
                 </div>
             </div>

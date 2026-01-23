@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 export default function AddQuiz({ onClose, loadAllQuiz }) {
 
+    const [submiting, setSubmiting] = useState(false);
     const [quizName, setQuizName] = useState('');
     const [questions, setQuestions] = useState([
         {
@@ -36,6 +37,7 @@ export default function AddQuiz({ onClose, loadAllQuiz }) {
 
     const handleSubmit = async () => {
         try {
+            setSubmiting(true);
             const { success, message } = await addQuiz({ quizName, questions });
             if (success) {
                 loadAllQuiz();
@@ -45,6 +47,8 @@ export default function AddQuiz({ onClose, loadAllQuiz }) {
             return toast.error(message);
         } catch (error) {
             console.log('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -88,10 +92,11 @@ export default function AddQuiz({ onClose, loadAllQuiz }) {
 
                 <div className="flex gap-4">
                     <button
-                        className="grow btn bg-blue-600 text-white"
+                        disabled={submiting}
+                        className="grow btn not-disabled:bg-blue-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Create Quiz
+                        {submiting ? 'Creating...' : 'Create Quiz'}
                     </button>
                     <button
                         className="btn border-gray-300"

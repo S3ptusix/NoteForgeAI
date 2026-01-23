@@ -1,11 +1,15 @@
 import { TriangleAlert } from "lucide-react";
 import { toast } from "react-toastify";
 import { deleteReviewer } from "../services/ReviewerServices";
+import { useState } from "react";
 
 export default function DeleteReviewer({ reviewerId, onClose, loadAllReviewer }) {
 
+    const [submiting, setSubmiting] = useState(false);
+
     const handleSubmit = async () => {
         try {
+            setSubmiting(true);
             const { success, message } = await deleteReviewer(reviewerId);
             if (success) {
                 loadAllReviewer();
@@ -15,6 +19,8 @@ export default function DeleteReviewer({ reviewerId, onClose, loadAllReviewer })
             return toast.error(message);
         } catch (error) {
             console.error('Error on handleSubmit:', error);
+        } finally {
+            setSubmiting(false);
         }
     }
 
@@ -38,10 +44,11 @@ export default function DeleteReviewer({ reviewerId, onClose, loadAllReviewer })
                         Cancel
                     </button>
                     <button
-                        className="btn bg-red-600 text-white"
+                        disabled={submiting}
+                        className="btn not-disabled:bg-red-600 not-disabled:text-white"
                         onClick={handleSubmit}
                     >
-                        Delete
+                        {submiting ? 'Deleting...' : 'Delete'}
                     </button>
                 </div>
             </div>
