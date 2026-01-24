@@ -43,8 +43,6 @@ export default function ViewCards() {
         });
     }, [deckId]);
 
-    if (loading) return <Loading />;
-
     return (
         <div className="min-h-screen flex flex-col">
             <Topbar />
@@ -89,6 +87,7 @@ export default function ViewCards() {
                     runFunction={loadAllCard}
                 />
             }
+            {loading && <Loading />}
         </div>
     )
 }
