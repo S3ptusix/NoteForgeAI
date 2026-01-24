@@ -4,6 +4,23 @@
     themes: light --default;
 }
 
+@keyframes border-slide-x {
+    0% {
+        transform: translateX(0);
+        /* start at original position */
+    }
+
+    50% {
+        transform: translateX(-50%);
+        /* move 20px to the right */
+    }
+
+    100% {
+        transform: translateX(0);
+        /* back to start */
+    }
+}
+
 @layer utilities {
     .flex-center {
         @apply flex justify-center items-center;
@@ -48,7 +65,14 @@
     .EditorContent h2 {
         @apply text-xl;
     }
+
     .EditorContent h3 {
         @apply text-lg;
+    }
+
+    .card-wrapper {
+        @apply absolute inset-0 w-2/1;
+        background: linear-gradient(45deg, #facc15, #f5f0e2, #f59e0b);
+        animation: border-slide-x 5s linear infinite;
     }
 }

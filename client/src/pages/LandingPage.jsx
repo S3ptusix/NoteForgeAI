@@ -27,10 +27,13 @@ export default function LandingPage() {
                         viewport={{ once: true, amount: 0.8 }}
                     >
                         <motion.div
-                            className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm mb-6"
+                            className="relative w-fit mx-auto p-0.5 text-blue-600 rounded-full text-sm mb-6 overflow-hidden"
                             variants={fadeUp}
                         >
-                            ✨ AI-Powered Learning Tool
+                            <div className="relative bg-blue-100 px-4 py-2 rounded-full z-10">
+                                ✨ AI-Powered Learning Tool
+                            </div>
+                            <div className="card-wrapper"></div>
                         </motion.div>
 
                         <motion.p
