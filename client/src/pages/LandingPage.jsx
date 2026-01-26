@@ -9,6 +9,7 @@ import { fadeUp, staggerContainer } from "../animations/reveal";
 import Footer from "../components/Footer";
 import HowItWorks from "../components/HowItWorks";
 import WhyNoteForgeAI from "../components/WhyNoteForgeAI";
+import flashcard_quiz_reviewer from '../assets/flashcard_quiz_reviewer.png';
 
 export default function LandingPage() {
 
@@ -18,7 +19,7 @@ export default function LandingPage() {
         <div className="min-h-screen flex flex-col">
             <Topbar />
             <div className="grow bg-blue-50">
-                <section className="my-40 mx-[10vw]">
+                <section className="my-20 mx-[10vw]">
                     <motion.div
                         className="text-center w-[min(600px,100%)] mx-auto"
                         variants={staggerContainer}
@@ -26,6 +27,7 @@ export default function LandingPage() {
                         whileInView="show"
                         viewport={{ once: true, amount: 0.8 }}
                     >
+
                         <motion.div
                             className="relative w-fit mx-auto p-0.5 text-blue-600 rounded-full text-sm mb-6 overflow-hidden"
                             variants={fadeUp}
@@ -50,8 +52,13 @@ export default function LandingPage() {
                             Flashcards, Quizzes & Reviewers
                         </motion.p>
 
+                        <motion.img src={flashcard_quiz_reviewer}
+                            variants={fadeUp}
+                            className="my-8"
+                        />
+
                         <motion.p
-                            className="text-lg my-8 text-gray-600"
+                            className="text-lg mb-8 text-gray-600"
                             variants={fadeUp}
                         >
                             Automatically generate flashcards, interactive quizzes, and

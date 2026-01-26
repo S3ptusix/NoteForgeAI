@@ -77,7 +77,7 @@ export default function GenerateMaterial({ runFunction = () => { } }) {
             </p>
             <textarea
                 placeholder="Paste your notes here. The system will automatically generate study materials based on key concepts..."
-                className="border border-gray-300 w-full p-4 rounded-lg h-75 mb-4 resize-none focus:outline-blue-700"
+                className="border border-gray-300 w-full p-4 rounded-lg h-100 mb-4 resize-none focus:outline-blue-700"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
             />
