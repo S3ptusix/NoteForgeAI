@@ -75,4 +75,28 @@
         background: linear-gradient(45deg, #facc15, #f5f0e2, #f59e0b);
         animation: border-slide-x 5s linear infinite;
     }
+
+    .img-fade-left {
+        -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+    }
+
+    .hiw-card{
+        @apply relative flex flex-col items-center text-center p-4 bg-gray-900 text-white rounded-xl;
+    }
+    .hiw-card-img{
+        @apply rounded-md mb-6 shadow-md cursor-pointer;
+    }
+    /* .hiw-card::after{
+        content: '';
+        @apply absolute inset-0 border-2 border-gray-100 rounded-xl rotate-2 duration-150 pointer-events-none;
+    }
+    .hiw-card:hover::after{
+        @apply rotate-0;
+    } */
+    .hiw-step{
+        @apply w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl mb-4;
+    }
 }

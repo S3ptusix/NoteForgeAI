@@ -2,21 +2,21 @@ import express from 'express';
 import { addReviewerController, deleteReviewerContoller, editReviewerController, fetchAllReviewerController, fetchOneReviewerController } from '../controllers/reviewerControllers.js';
 import { authenticateUserJWT } from '../middleware/auth.js';
 
-const reviewerRoute = express.Router();
+const reviewerRouter = express.Router();
 
 // ADD REVIEWER 
-reviewerRoute.post('/add', authenticateUserJWT, addReviewerController);
+reviewerRouter.post('/add', authenticateUserJWT, addReviewerController);
 
 // FETCH ALL REVIEWER 
-reviewerRoute.get('/fetchAll', authenticateUserJWT, fetchAllReviewerController);
+reviewerRouter.get('/fetchAll', authenticateUserJWT, fetchAllReviewerController);
 
 // FETCH ONE REVIEWER 
-reviewerRoute.get('/fetch/:reviewerId', fetchOneReviewerController);
+reviewerRouter.get('/fetch/:reviewerId', fetchOneReviewerController);
 
 // DELETE REVIEWER 
-reviewerRoute.delete('/delete/:reviewerId', deleteReviewerContoller);
+reviewerRouter.delete('/delete/:reviewerId', deleteReviewerContoller);
 
 // EDIT REVIEWER 
-reviewerRoute.put('/edit', editReviewerController);
+reviewerRouter.put('/edit', editReviewerController);
 
-export default reviewerRoute;
+export default reviewerRouter;
